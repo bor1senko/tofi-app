@@ -1,0 +1,424 @@
+<div ng-app="jupiter.admin"
+     ng-controller="ClientsController as ctrl"
+     ng-init="ctrl.getClient()">
+  <section>
+    <h1>Профайл</h1>
+    <hr class="primary">
+
+    <div class="row-offset-0">
+      <ul class="nav nav-tabs" role="tablist" id="tabsHeader">
+        <li role="presentation" class="active">
+           <a href="#tabProfile"
+              aria-controls="tabProfile"
+              role="tab"
+              data-toggle="tab"
+              class="tab-link">
+             Личные данные
+           </a>
+        </li>
+        <li role="presentation"
+            ng-if="user.isAdmin() && !user.user.is_superuser">
+          <a href="#tabStatistics"
+             aria-controls="tabStatistics"
+             role="tab"
+             data-toggle="tab"
+             class="tab-link">
+            Статистика
+          </a>
+        </li>
+        <li role="presentation"
+            ng-if="user.isClient() || user.user.is_superuser">
+          <a href="#tabChangePassword"
+             aria-controls="tabChangePassword"
+             role="tab"
+             data-toggle="tab"
+             class="tab-link">
+            Изменение пароля
+          </a>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+        <div ng-if="user.isAdmin() && !user.user.is_superuser"
+             class="tab-pane row-offset-0"
+             id="tabStatistics"
+             role="tabpanel">
+          <div ng-class="ctrl.data.scoring.level === 'success' ? 'panel panel-success' :
+                         ctrl.data.scoring.level === 'warning' ? 'panel panel-warning' :
+                         ctrl.data.scoring.level === 'danger' ? 'panel panel-danger' :
+                         'panel panel-default'">
+            <div class="panel-heading">
+              <h5 class="panel-title">Платежеспособность:</h5>
+            </div>
+
+            <div class="panel-body">
+              <span ng-if="ctrl.data.scoring.level === 'success'">
+                <b>Платежеспособность высокая:</b>
+                вероятность выплат по кредитам без штрафов -
+                {{ctrl.data.scoring.scoring_result * 100}}%
+              </span>
+
+              <span ng-if="ctrl.data.scoring.level === 'warning'">
+                <b>Платежеспособность средняя:</b>
+                вероятность выплат по кредитам без штрафов -
+                {{ctrl.data.scoring.scoring_result * 100}}%
+              </span>
+
+              <span ng-if="ctrl.data.scoring.level === 'danger'">
+                <b>Платежеспособность низкая:</b>
+                вероятность выплат по кредитам без штрафов -
+                {{ctrl.data.scoring.scoring_result * 100}}%
+              </span>
+            </div>
+          </div>
+
+
+          <div class="panel panel-default"
+             ng-init="ctrl.getClientStatistics()">
+            <div class="panel-heading">
+              <h5 class="panel-title">
+                Общее количество кредитов:
+                {{ctrl.statistics.credits.total_count}}
+                <a class="link" href="/credits/?client_id={{ctrl.data.id}}"> (Просмотреть)</a>
+              </h5>
+            </div>
+            <div class="panel-body" style="padding-bottom: 10px;">
+              <table width="100%" class="table table-bordered table-responsive">
+                <tr>
+                  <th width="45%">Статус</th>
+                  <th width="45%">Количество</th>
+                  <th width="10%"></th>
+                </tr>
+                <tr ng-repeat="(code, status) in ctrl.creditStatuses">
+                  <td>{{status}}</td>
+                  <td>{{ctrl.statistics.credits.states_count[code]}}</td>
+                  <td>
+                    <a href="/credits/?client_id={{ctrl.data.id}}&status={{code}}"
+                       class="btn btn-info button">
+                      Просмотреть
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <h5>
+                Просрочек выплат более 30 дней:
+                {{ctrl.data.profile.number_of_times_30_59_days_late}}
+              </h5>
+
+              <h5>
+                Просрочек выплат более 60 дней:
+                {{ctrl.data.profile.number_of_times_60_89_days_late}}
+              </h5>
+
+              <h5>
+                Просрочек выплат более 90 дней:
+                {{ctrl.data.profile.number_of_times_90_more_days_late}}
+              </h5>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h5 class="panel-title">
+                Общее количество вкладов:
+                {{ctrl.statistics.deposits.total_count}}
+                <a class="link" href="/deposits/?client_id={{ctrl.data.id}}"> (Просмотреть)</a>
+              </h5>
+            </div>
+            <div class="panel-body" style="padding-bottom: 0px;">
+              <table width="100%" class="table table-bordered">
+                <tr>
+                  <th width="45%">Статус</th>
+                  <th width="45%">Количество</th>
+                  <th width="10%"></th>
+                </tr>
+                <tr ng-repeat="(code, status) in ctrl.depositStatuses">
+                  <td>{{status}}</td>
+                  <td>{{ctrl.statistics.deposits.states_count[code]}}</td>
+                  <td>
+                    <a href="/deposits/?client_id={{ctrl.data.id}}&status={{code}}"
+                       class="btn btn-info button">
+                      Просмотреть
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h5>
+                Общее количество транзакций:
+                {{ctrl.statistics.transactions.total_count}}
+                <a class="link" href="/transactions/?client_id={{ctrl.data.id}}"> (Просмотреть)</a>
+              </h5>
+            </div>
+            <div class="panel-body" style="padding-bottom: 0px;">
+              <table width="100%" class="table table-bordered">
+                <tr>
+                  <th width="45%">Статус</th>
+                  <th width="45%">Количество</th>
+                  <th width="10%"></th>
+                </tr>
+                <tr ng-repeat="(code, status) in ctrl.transactionTypes">
+                  <td>{{status}}</td>
+                  <td>{{ctrl.statistics.transactions.states_count[code]}}</td>
+                  <td>
+                    <a href="/transactions/?client_id={{ctrl.data.id}}&type={{code}}"
+                       class="btn btn-info button">
+                      Просмотреть
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane row-offset-0 active"
+             id="tabProfile"
+             role="tabpanel">
+          <form ng-submit="ctrl.updateClient()">
+            <div class="alert alert-success"
+                 role="alert"
+                 ng-if="ctrl.profile_success">
+              <b>{{ctrl.profile_success}}</b>
+            </div>
+
+            <div class="form-group">
+              <label for="firstNameInput">ФИО</label>
+              <input id="firstNameInput"
+                     type="text"
+                     class="form-control"
+                     ng-model="ctrl.data.first_name"
+                     placeholder="ФИО"
+                     required>
+            </div>
+
+            <div class="form-group">
+              <label for="emailInput">Email</label>
+              <input id="emailInput"
+                     class="form-control"
+                     type="email"
+                     ng-model="ctrl.data.email"
+                     placeholder="Email"
+                     required>
+            </div>
+
+            <div class="form-group">
+              <label for="phoneInput">Телефон</label>
+              <input id="phoneInput"
+                     class="form-control"
+                     type="text"
+                     ng-model="ctrl.data.profile.phone"
+                     placeholder="Телефон">
+            </div>
+
+            <div class="form-group">
+              <label for="birthDateInput">Дата рождения</label>
+              <p class="input-group" id="birthDateInput">
+                <input type="text"
+                       class="form-control"
+                       ng-model="ctrl.data.profile.birth_date"
+                       datepicker-popup="dd.MM.yyyy"
+                       show-weeks="false"
+                       is-open="birthDatePickerOpened"
+                       ng-required="true"
+                       placeholder="Дата рождения">
+                <span class="input-group-btn">
+                  <button type="button"
+                          class="btn btn-default"
+                          ng-click="toggleBirthDatePicker($event)">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                  </button>
+                </span>
+              </p>
+            </div>
+            <hr class="primary">
+
+            <div class="form-group">
+              <label for="passportNumberInput">Номер паспорта</label>
+              <input id="passportNumberInput"
+                     class="form-control"
+                     class="form-control"
+                     type="text"
+                     ng-model="ctrl.data.profile.passport_number"
+                     placeholder="Номер паспорта"
+                     required
+                     ng-disabled="user.isClient()">
+            </div>
+
+            <div class="form-group">
+              <label for="passportExpiresDateInput">Срок действия паспорта</label>
+              <p class="input-group" id="passportExpiresDateInput">
+                <input type="text"
+                       class="form-control"
+                       ng-model="ctrl.data.profile.passport_expires"
+                       datepicker-popup="dd.MM.yyyy"
+                       show-weeks="false"
+                       is-open="passportExpiresPickerOpened"
+                       ng-required="true"
+                       placeholder="Срок действия паспорта"
+                       required
+                       ng-disabled="user.isClient()">
+                <span class="input-group-btn">
+                  <button type="button"
+                          class="btn btn-default"
+                          ng-click="togglePassportExpiresPicker($event)"
+                          ng-disabled="user.isClient()">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                  </button>
+                </span>
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label for="identificationNumberInput">Идентификационный номер</label>
+              <span>{{ctrl.data.profile.identification_number}}</span>
+              <input id="identificationNumberInput"
+                     class="form-control"
+                     type="text"
+                     ng-model="ctrl.data.profile.identification_number"
+                     placeholder="Идентификационный номер"
+                     required
+                     ng-disabled="user.isClient()">
+            </div>
+            <hr class="primary">
+
+            <div class="form-group">
+              <label for="addressInput">Место проживания</label>
+              <input id="addressInput"
+                     class="form-control"
+                     type="text"
+                     ng-model="ctrl.data.profile.address"
+                     placeholder="Место проживания">
+            </div>
+
+            <div class="form-group">
+              <label for="jobInput">Место работы</label>
+              <input id="jobInput"
+                     class="form-control"
+                     type="text"
+                     ng-model="ctrl.data.profile.job"
+                     placeholder="Место работы">
+            </div>
+
+            <div class="form-group">
+              <label for="familyStatusInput">Семейное положение</label>
+              <input id="familyStatusInput"
+                     class="form-control"
+                     type="text"
+                     ng-model="ctrl.data.profile.family_status"
+                     placeholder="Семейное положение">
+            </div>
+
+            <div class="form-group"
+                 ng-if="user.isAdmin()">
+              <label for="dependantsInput">Информация о составе семьи</label>
+              <textarea id="dependantsInput"
+                        class="form-control"
+                        ng-model="ctrl.data.profile.dependants"
+                        placeholder="Состав семьи">
+              </textarea>
+            </div>
+
+            <div class="form-group"
+                 ng-if="user.isAdmin()">
+              <label for="realtyInput">Информация о недвижимости</label>
+              <textarea id="realtyInput"
+                        class="form-control"
+                        ng-model="ctrl.data.profile.realty"
+                        placeholder="Недвижимости">
+              </textarea>
+            </div>
+
+            <div class="form-group"
+                 ng-if="user.isAdmin()">
+              <label for="incomeInput">Информация о доходах</label>
+              <textarea id="incomeInput"
+                        class="form-control"
+                        ng-model="ctrl.data.profile.income"
+                        placeholder="Доходах">
+              </textarea>
+            </div>
+            <hr class="primary">
+
+            <div class="row-offset-0">
+              <button type="submit"
+                      class="form-control btn btn-success">
+                <span class='glyphicon glyphicon-ok'></span>
+                Сохранить
+              </button>
+            </div>
+
+            <div class="row-offset-0" ng-if="user.user.is_superuser">
+              <a ng-click="ctrl.deleteUser(ctrl.data.id)"
+                      class="form-control btn btn-danger">
+                <span class='glyphicon glyphicon-remove'></span>
+                Удалить
+              </a>
+            </div>
+
+            <div class="row-offset-0" ng-if="user.isAdmin()">
+              <a href="/clients/"
+                 class="form-control btn btn-warning button">
+                <span class='glyphicon glyphicon-log-out'></span>
+                Назад
+              </a>
+            </div>
+          </form>
+        </div>
+
+        <div ng-if="user.isClient() || user.user.is_superuser"
+             class="tab-pane row-offset-0"
+             id="tabChangePassword"
+             role="tabpanel">
+          <form ng-submit="ctrl.changePassword()">
+            <div class="alert alert-success"
+                 role="alert"
+                 ng-if="ctrl.password_success">
+              <b>{{ctrl.password_success}}</b>
+            </div>
+
+            <div class="form-group">
+              <label for="oldPasswordInput">Старый пароль</label>
+              <input id="oldPasswordInput"
+                     class="form-control"
+                     type="password"
+                     ng-model="ctrl.changePasswordData.old_password"
+                     placeholder="Старый пароль">
+            </div>
+
+            <div class="form-group">
+              <label for="newPasswordInput">Новый пароль</label>
+              <input id="newPasswordInput"
+                     class="form-control"
+                     type="password"
+                     ng-model="ctrl.changePasswordData.new_password"
+                     placeholder="Новый пароль">
+            </div>
+
+            <div class="form-group">
+              <label for="newPasswordConfirmInput">Новый пароль</label>
+              <input id="newPasswordConfirmInput"
+                     class="form-control"
+                     type="password"
+                     ng-model="ctrl.changePasswordData.new_password_confirm"
+                     placeholder="Новый пароль">
+            </div>
+
+            <div class="row-offset-0">
+              <button type="submit"
+                      class="form-control btn btn-success button">
+                 <span class="glyphicon glyphicon-ok"></span>
+                 Изменить пароль
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

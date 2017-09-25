@@ -1,0 +1,48 @@
+@import "colors.less";
+@import "elems.less";
+
+.section {
+  border-top: 1px solid @navbar-border-color;
+  padding-top: 3%;
+  padding-bottom: 2%;
+
+  .section-heading {
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 3em;
+    opacity: 0.9;
+  }
+
+  .section-subheading {
+    .link;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 2em;
+    display: block;
+  }
+
+  .section-image {
+    height: 150px;
+    width: 150px;
+    margin-top: 30px;
+  }
+
+  .section-image-small {
+    height: 80px;
+    width: 80px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .section-text {
+    padding-left: 60px;
+    padding-right: 60px;
+    font-size: 1.2em;
+    color: @text-color;
+  }
+}
+
+#contacts-section {
+  background-color: @gray-lighter;
+}

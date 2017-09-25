@@ -1,0 +1,103 @@
+<div ng-app="jupiter.auth" ng-controller="SignUpController as ctrl">
+  <div class="container row-offset-1">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            Регистрация
+          </h4>
+        </div>
+
+        <div class="panel-body">
+          <form ng-submit="ctrl.signUp()">
+            <div class="form-group">
+              <label for="usernameInput">Имя пользователя</label>
+              <input id="usernameInput"
+                     class="form-control"
+                     type="text"
+                     ng-model="ctrl.data.username"
+                     placeholder="Имя пользователя">
+            </div>
+
+            <div class="form-group">
+              <label for="passwordInput">Пароль</label>
+              <input id="passwordInput"
+                     class="form-control"
+                     type="password"
+                     ng-model="ctrl.data.password"
+                     placeholder="Пароль">
+            </div>
+
+            <div class="form-group">
+              <label for="emailInput">Почта</label>
+              <input id="emailInput"
+                     class="form-control"
+                     type="email"
+                     ng-model="ctrl.data.email"
+                     placeholder="Почта">
+            </div>
+
+            <div class="form-group">
+              <label for="NameInput">ФИО</label>
+              <input id="NameInput"
+                     class="form-control"
+                     type="text"
+                     ng-model="ctrl.data.first_name"
+                     placeholder="ФИО">
+            </div>
+
+            <div class="form-group">
+              <label for="passportId">Номер паспорта</label>
+              <input id="passportId"
+                     class="form-control"
+                     type="text"
+                     ng-model="ctrl.data.profile.passport_number"
+                     placeholder="Номер паспорта">
+            </div>
+
+            <div class="form-group">
+              <label for="personalId">Идентификационный номер</label>
+              <input id="personalId"
+                     class="form-control"
+                     type="text"
+                     ng-model="ctrl.data.profile.identification_number"
+                     placeholder="Идентификационный номер">
+            </div>
+
+            <div class="form-group">
+              <label for="passportExpiresDateInput">Срок действия паспорта</label>
+              <p class="input-group" id="passportExpiresDateInput">
+                <input type="text"
+                       class="form-control"
+                       ng-model="ctrl.data.profile.passport_expires"
+                       datepicker-popup="dd.MM.yyyy"
+                       show-weeks="false"
+                       is-open="passportExpiresPickerOpened"
+                       placeholder="Срок действия паспорта">
+                <span class="input-group-btn">
+                  <button type="button"
+                          class="btn btn-default"
+                          ng-click="togglePassportExpiresPicker($event)">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                  </button>
+                </span>
+              </p>
+            </div>
+
+            <button type="submit"
+                    class="form-control btn btn-success button">
+              <span class='glyphicon glyphicon-user'></span>
+              Зарегистрироваться
+            </button>
+
+            <a href='/sign-in/'
+               class="form-control btn btn-info row-offset-0">
+              <span class='glyphicon glyphicon-log-in'></span>
+              Войти
+            </a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+<div>

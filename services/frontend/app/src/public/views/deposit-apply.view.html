@@ -1,0 +1,82 @@
+<div ng-controller="DepositApplicationController as ctrl"
+     ng-init="ctrl.getData()">
+  <section>
+    <h1>Оформление вклада</h1>
+    <form ng-submit="ctrl.apply()">
+      <div class="form-group">
+        <label for="account-control">Счет, с которого будут списаны средства:</label>
+        <select class="form-control"
+                id="account-control"
+                ng-model="ctrl.account_id"
+                required>
+          <option></option>
+          <option ng-repeat="account in ctrl.accounts"
+                  value="{{account.id}}">
+            {{account.number}}
+            ({{ctrl.accountStatuses[account.status]}},
+            Остаток: {{account.residue}} {{account.residue_currency}})
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="currency-control">Валюта:</label>
+        <select class="form-control"
+                id="currency-control"
+                ng-model="ctrl.currency"
+                required>
+          <option></option>
+          <option ng-repeat="(code, currency) in ctrl.currencies" value="{{code}}">
+            {{currency}}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="amount-control">
+          Сумма ({{ctrl.currency}})
+          <span ng-if="ctrl.currency">
+            (минимум {{ctrl.template.currency[ctrl.currency].min_amount}}):
+          </span>
+        </label>
+        <input type="number"
+               class="form-control"
+               ng-model="ctrl.amount"
+               placeholder="Сумма"
+               id="amount-control"
+               min="{{ctrl.template.currency[ctrl.currency].min_amount}}"
+               required>
+      </div>
+
+      <div class="form-group">
+        <label for="duration-control">
+          Продолжительность, в месяцах
+        </label>
+        <select class="form-control"
+                ng-model="ctrl.plan_index"
+                ng-disabled="!ctrl.currency"
+                required
+                id="duration-control">
+          <option></option>
+          <option ng-repeat="plan in ctrl.template.currency[ctrl.currency].percentage"
+                  value="{{$index}}">
+            {{plan.term}}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <button ng-if="!ctrl.processing"
+                type="submit"
+                class="form-control btn btn-info button">
+          <span class="glyphicon glyphicon-ok"></span>
+          Подтвердить
+        </button>
+
+        <div class="loader-small"
+             ng-if="ctrl.processing">
+        </div>
+      </div>
+    </form>
+  </section>
+</div>

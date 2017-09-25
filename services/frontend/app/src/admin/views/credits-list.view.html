@@ -1,0 +1,89 @@
+<div ng-controller="CreditsController as ctrl"
+     ng-init="ctrl.getCredits()">
+ <section>
+    <h1>Кредиты</h1>
+    <hr class="primary">
+
+    <div class="loader"
+         ng-if="!ctrl.data">
+    </div>
+
+    <table class="table table-bordered"
+           ng-if="ctrl.data">
+      <tr class="info">
+        <th width="28%" ng-if="user.isAdmin()">Клиент</th>
+        <th width="20%">Остаток</th>
+        <th width="20%">План</th>
+        <th width="15%">Статус</th>
+        <th width="15%"></th>
+      </tr>
+      <tr>
+        <th ng-if="user.isAdmin()">
+          <input type="text"
+                 class="form-control form-control-small"
+                 ng-model="ctrl.filterParams.client_name"
+                 ng-keypress="ctrl.updateFilterParams($event.keyCode)">
+        </th>
+        <th>
+          <input type="text"
+                 class="form-control form-control-small"
+                 ng-model="ctrl.filterParams.residue"
+                 ng-keypress="ctrl.updateFilterParams($event.keyCode)">
+        </th>
+        <th>
+          <select class="form-control form-control-small"
+                  ng-model="ctrl.filterParams.template"
+                  ng-change="ctrl.updateFilterParams(13)"
+                  ng-init="ctrl.getCreditTemplates()">
+            <option></option>
+            <option ng-repeat="template in ctrl.templates"
+                    value="{{template.id}}">
+              {{template.name}}
+            </option>
+          </select>
+        </th>
+        <th>
+          <div class="dropdown">
+            <select class="form-control form-control-small"
+                    ng-model="ctrl.filterParams.status"
+                    ng-change="ctrl.updateFilterParams(13)">
+              <option></option>
+              <option ng-repeat="(code, status) in ctrl.creditStatuses"
+                      value="{{code}}">
+                {{status}}
+              </option>
+            </select>
+          </div>
+        </th>
+        <th></th>
+      </tr>
+      <tr ng-repeat="credit in ctrl.data">
+        <td ng-if="user.isAdmin()">
+          <a class="link"
+             href="/clients/{{credit.client.id}}/">
+            {{credit.client.first_name}}
+          </a>
+        </td>
+        <td>
+          {{credit.total}} {{credit.residue_currency}}
+        </td>
+        <td>
+          <a class="link"
+             href="/credit-templates/{{credit.template.id}}/">
+             {{credit.template.name}}
+          </a>
+        </td>
+        <td>
+          {{ctrl.creditStatuses[credit.status]}}
+        </td>
+        <td>
+          <a href="/credits/{{credit.id}}/"
+             class="stretch text-small btn btn-info button">
+            <span class="glyphicon glyphicon-eye-open"></span>
+            Детальная информация
+          </a>
+        </td>
+      </tr>
+    </table>
+ </section>
+</div>

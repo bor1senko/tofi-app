@@ -1,0 +1,22 @@
+@import "elems.less";
+@import "colors.less";
+
+#page-top {
+  margin-bottom: 1.5em;
+
+  .navbar-custom {
+    background-color: @navbar-background-color;
+    border-bottom: 1px solid @navbar-border-color;
+
+    a.navbar-brand {
+      .link;
+      font-size: 1.5em;
+    }
+
+    li > a.navbar-link {
+      .link;
+      font-size: 1em;
+      text-transform: uppercase;
+    }
+  }
+}

@@ -1,0 +1,38 @@
+db:
+  image: postgres
+  environment:
+    - POSTGRES_PASSWORD=jupiter
+    - POSTGRES_USER=jupiter
+    - PGPORT=6000
+
+
+scoring:
+  image: jupiterapp/scoring
+
+
+backend:
+  image: jupiterapp/backend
+  privileged: true
+  ports:
+    - "8000:8000"
+  environment:
+    - DB_PASSWORD=jupiter
+    - DB_USER=jupiter
+    - DB_HOST=db
+    - DB_PORT=6000
+    - SCORING_HOST=scoring
+    - SCORING_PORT=8001
+    - SENDGRID_TOKEN=U0cuT0xoRXBNd3JSOGVJcVFJUG05MjItQS44RllmSWhnV19EbFRTUk4wRkw5QTZBUUMxWXFhbkF4eDA0ZW1DU25rc293
+    - SITE_HOST = https://jupiter-group.tk/
+  links:
+    - db:db
+    - scoring:scoring
+
+
+frontend:
+  image: jupiterapp/frontend
+  ports:
+    - "80:80"
+    - "443:443"
+  links:
+    - backend:backend

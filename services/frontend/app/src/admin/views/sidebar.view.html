@@ -1,0 +1,13 @@
+<div class="admin-sidebar"
+     ng-controller="SidebarController as ctrl"
+     ng-init="ctrl.initItems()">
+    <ul class="sidebar-nav">
+        <li ng-repeat="item in ctrl.items"
+            ng-class="ctrl.valueIfPath(item.url, 'active')"
+            class="sidebar-elem">
+            <a href="{{item.url}}">
+                {{item.label}}
+            </a>
+        </li>
+    </ul>
+</div>

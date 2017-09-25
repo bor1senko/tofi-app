@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <base href="/">
+  <title>Жупитер</title>
+
+  <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet/less" type="text/css" href="assets/less/main.less"/>
+
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="node_modules/angular/angular.min.js"></script>
+  <script src="node_modules/angular-route/angular-route.min.js"></script>
+  <script src="node_modules/ngstorage/ngStorage.min.js"></script>
+  <script src="node_modules/less/dist/less.js"></script>
+  <script src="node_modules/angular-bootstrap/ui-bootstrap.min.js"></script>
+  <script src="node_modules/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+
+  <script src="src/core/module.js"></script>
+  <script src="src/core/controllers/landing.controller.js"></script>
+  <script src="src/core/controllers/base.controller.js"></script>
+  <script src="src/core/controllers/main.controller.js"></script>
+  <script src="src/core/services/error.service.js"></script>
+  <script src="src/core/services/url.service.js"></script>
+
+  <script src="src/auth/module.js"></script>
+  <script src="src/auth/services/user.service.js"></script>
+  <script src="src/auth/services/auth.service.js"></script>
+  <script src="src/auth/controllers/sign-in.controller.js"></script>
+  <script src="src/auth/controllers/sign-up.controller.js"></script>
+  <script src="src/auth/controllers/password-reset.controller.js"></script>
+
+  <script src="src/public/module.js"></script>
+  <script src="src/public/controllers/credit-templates.controller.js"></script>
+  <script src="src/public/controllers/credit-apply.controller.js"></script>
+  <script src="src/public/controllers/deposit-templates.controller.js"></script>
+  <script src="src/public/controllers/deposit-apply.controller.js"></script>
+
+  <script src="src/admin/module.js"></script>
+  <script src="src/admin/controllers/overview.controller.js"></script>
+  <script src="src/admin/controllers/clients.controller.js"></script>
+  <script src="src/admin/controllers/sidebar.controller.js"></script>
+  <script src="src/admin/controllers/credits.controller.js"></script>
+  <script src="src/admin/controllers/credit-detail.controller.js"></script>
+  <script src="src/admin/controllers/deposits.controller.js"></script>
+  <script src="src/admin/controllers/deposit-detail.controller.js"></script>
+  <script src="src/admin/controllers/transactions.controller.js"></script>
+  <script src="src/admin/controllers/accounts.controller.js"></script>
+  <script src="src/admin/controllers/finance-settings.controller.js"></script>
+
+  <script src="src/app.config.js"></script>
+</head>
+<body ng-app="jupiter">
+<div ng-controller="BaseController as baseCtrl">
+  <div id="page-content">
+    <div id="page-top" class="index">
+      <div class="container">
+        <nav id="mainNav"
+             class="navbar navbar-default  navbar-custom navbar-fixed-top">
+          <div class="navbar-header">
+            <button type="button"
+                    class="navbar-toggle collapsed"
+                    data-toggle="collapse"
+                    data-target="#navbar-main"
+                    aria-expanded="false">
+              <span class="sr-only">Меню</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+              <span class="glyphicon glyphicon-home"></span>
+            </a>
+          </div>
+
+          <div class="collapse navbar-collapse"
+               id="navbar-main"
+               style="margin-right: 30px;">
+            <ul class="nav navbar-nav navbar-right">
+              <li ng-if="!user.isAuthenticated()">
+                <a href="/deposit-templates/" class="navbar-link">
+                  <span class="glyphicon glyphicon-piggy-bank"></span>
+                  Вклады
+                </a>
+              </li>
+
+              <li ng-if="!user.isAuthenticated()">
+                <a href="/credit-templates/" class="navbar-link">
+                  <span class="glyphicon glyphicon-credit-card"></span>
+                  Кредиты
+                </a>
+              </li>
+
+              <li ng-if="!user.isAuthenticated()">
+                <a href="/sign-in/" class="navbar-link">
+                  <span class="glyphicon glyphicon-log-in"></span>
+                  Войти
+                </a>
+              </li>
+
+              <li ng-if="!user.isAuthenticated()">
+                <a href="/sign-up/" class="navbar-link">
+                  <span class="glyphicon glyphicon-user"></span>
+                  Зарегистрироватся
+                </a>
+              </li>
+
+              <li ng-if="user.isAuthenticated()">
+                <a href="javascript:void(0)" ng-click="auth.signOut()" class="navbar-link">
+                  <span class="glyphicon glyphicon-log-out"></span>
+                  Выйти
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <div ng-if="user.isAuthenticated()"
+         ng-include="'src/admin/views/sidebar.view.html'">
+    </div>
+
+    <div class="alert alert-danger errors-alert"
+         role="alert"
+         ng-if="error.errors">
+      <a ng-click="error.hideAlert()" class="link">
+        <span class="glyphicon glyphicon-remove"></span>
+      </a>
+      <div ng-repeat="(field, message) in error.errors">
+        <b>{{field}}:</b> {{message}}
+      </div>
+    </div>
+
+    <div class="alert alert-success errors-alert"
+         role="alert"
+         ng-if="error.success">
+      <a ng-click="error.hideAlert()" class="link">
+        <span class="glyphicon glyphicon-remove"></span>
+      </a>
+      <b>{{error.success}}</b>
+    </div>
+
+    <div ng-view
+         ng-class="user.isAuthenticated() ? 'admin-container' : ''">
+    </div>
+  </div>
+</div>
+</body>
+</html>

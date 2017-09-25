@@ -1,0 +1,115 @@
+<div ng-app="jupiter.public"
+     ng-controller="DepositTemplatesController as ctrl"
+     ng-init="ctrl.getDepositTemplate()"
+     ng-class="!user.isAuthenticated() ? 'public-container' : ''">
+  <section>
+    <div class="col-sm-12">
+      <div class="row">
+        <h1>
+          {{ctrl.data.name}}
+        </h1>
+      </div>
+      <hr class="primary">
+
+      <div class="row text-center">
+        <div class="col-sm-4 row-bottom-1">
+          <h4>Условие закрытия:</h4>
+          <h3>
+            <span ng-if="ctrl.data.closing == 0">В любой момент</span>
+            <span ng-if="ctrl.data.closing == 1">В конце срока</span>
+          </h3>
+        </div>
+        <div class="col-sm-4 row-bottom-1">
+          <h4>Возможность продления:</h4>
+          <h3>
+            <span ng-if="ctrl.data.prolongation">Да</span>
+            <span ng-if="!ctrl.data.prolongation">Нет</span>
+          </h3>
+        </div>
+        <div class="col-sm-4 row-bottom-1">
+          <h4>Возможность пополнения:</h4>
+          <h3>
+            <span ng-if="ctrl.data.additional_contributions">Да</span>
+            <span ng-if="!ctrl.data.additional_contributions">Нет</span>
+          </h3>
+        </div>
+      </div>
+      <hr class="primary">
+
+      <div class="row text-large">
+        <table class="table table-bordered">
+          <tr class="info">
+            <th class="text-center">Валюта</th>
+            <th class="text-center">Минимальная сумма</th>
+            <th class="text-center">Максимальный срок</th>
+            <th class="text-center">Процентная ставка</th>
+          <tr>
+          <tr ng-repeat="(currency, data) in ctrl.data.currency">
+            <td>
+              {{ctrl.currencyNames[currency]}}
+            </td>
+            <td>
+              {{data.min_amount}} {{currency}}
+            </td>
+            <td>
+              {{data.max_term}}
+            </td>
+            <td class="cell sub-table">
+              <table class="table sub-table">
+                <tr>
+                  <th ng-repeat="p in ctrl.currency_data[0].percentage">
+                    {{p.term}} месяцев
+                  </th>
+                <tr>
+                <tr>
+                  <td ng-repeat="p in data.percentage">
+                    {{p.percentage}} %
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="row">
+        <h4>Описание:</h4>
+        <p class="text-large">
+          {{ctrl.data.description}}
+        </p>
+      </div>
+
+      <div class="row" ng-if="ctrl.data.detailed_info">
+        <h4>Дополнительная информация:</h4>
+        <p class="text-large">
+          {{ctrl.data.detailed_info}}
+        </p>
+      </div>
+      <hr class="primary">
+
+      <div class="row">
+        <div class="col-sm-6 row-bottom-1">
+          <a ng-if="user.isClient()"
+             class="btn btn-info button stretch"
+             href="/deposit-templates/{{ctrl.data.id}}/apply/">
+            <span class="glyphicon glyphicon-ok"></span>
+            Перейти к оформлению
+          </a>
+          <a ng-if="!user.isAuthenticated()"
+             class="btn btn-info button stretch"
+             href="/sign-in/">
+            <span class="glyphicon glyphicon-ok"></span>
+            Перейти к оформлению
+          </a>
+        </div>
+
+        <div class="col-sm-6 row-bottom-1">
+          <a class="btn btn-info button stretch"
+             href="/deposit-templates/">
+            <span class="glyphicon glyphicon-log-out"></span>
+            Назад к списку
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

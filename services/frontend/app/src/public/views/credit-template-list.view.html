@@ -1,0 +1,48 @@
+<div ng-app="jupiter.public"
+     ng-controller="CreditTemplatesController as ctrl"
+     ng-init="ctrl.getCreditTemplates()"
+     ng-class="!user.isAuthenticated() ? 'public-container' : ''">
+  <section>
+    <h1>Кредиты</h1>
+    <hr class="primary">
+
+    <div class='panel panel-info'
+         ng-repeat="ct in ctrl.data">
+      <div class="panel-heading">
+        <h5 class="panel-title">
+          <a class="link"
+             href="/credit-templates/{{ct.id}}/">
+            {{ct.name}}
+          </a>
+        </h5>
+      </div>
+
+      <div class="panel-body">
+        <div class="col-sm-3">
+          <img src="assets/img/credits.icon.png"
+               class="img-responsive">
+        </div>
+
+        <div class="col-sm-9">
+          <h5>
+            Процентная ставка: {{ct.annual_percentage_rate}}%
+          </h5>
+          <h5>
+            Срок: {{ct.max_duration / 12}} лет
+          </h5>
+          <p>
+            {{ct.description}}
+          </p>
+          <p class="text-small">
+            {{ct.detailed_info}}
+          </p>
+          <a class="btn btn-info button"
+             href="/credit-templates/{{ct.id}}/">
+            <span class="glyphicon glyphicon-eye-open"></span>
+            Детальная информация
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,42 @@
+<div ng-controller="FinanceSettingsController as ctrl"
+     ng-init="ctrl.getFinanceSettings()">
+ <section>
+  <h1>Критические уровни скоринга</h1>
+  <hr class="primary">
+
+   <div class="stretch">
+      <form ng-submit="ctrl.updateScoringValues()">
+        <div class="alert alert-success"
+           role="alert"
+           ng-if="ctrl.success">
+          {{ctrl.success}}
+        </div>
+
+        <div class="form-group">
+          <label for="dangerLevelInput">Краснвый уровень</label>
+          <input id="dangerLevelInput"
+                 class="form-control"
+                 type="text"
+                 ng-model="ctrl.data.scoring.danger_level"
+                 placeholder="Красный уровень">
+        </div>
+
+        <div class="form-group">
+          <label for="warningLevelInput">Желтый уровень</label>
+          <input id="warningLevelInput"
+                 class="form-control"
+                 type="text"
+                 ng-model="ctrl.data.scoring.warning_level"
+                 placeholder="Желтый уровень">
+        </div>
+
+        <div class="row-offset-0">
+          <button type="submit"
+                  class="form-control btn btn-success">
+            <span class="glyphicon glyphicon-ok"></span>
+            Установить
+          </button>
+        </div>
+      </form>
+  </div>
+</div>

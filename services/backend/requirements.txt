@@ -1,0 +1,16 @@
+Django==1.10.*
+djangorestframework==3.4.*
+django-filter==0.15.*
+markdown==2.6.*
+psycopg2==2.6.*
+flake8==3.0.*
+factory_boy==2.7.*
+faker==0.7.*
+ipython==5.1.*
+django-money==0.9.*
+pycrypto==2.6.*
+sendgrid==3.6.*
+pytz
+pudb
+simple-crypt
+django-cron

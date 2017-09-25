@@ -1,0 +1,165 @@
+<div ng-app="jupiter.admin"
+     ng-controller="ClientsController as ctrl"
+     ng-init="ctrl.getClients()">
+ <section>
+  <h1>Клиенты</h1>
+  <hr class="primary">
+
+  <div class="stretch row-offset-0"
+      ng-if="user.user.is_superuser">
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+            Управление администраторами
+        </h4>
+      </div>
+
+      <div class="panel-body">
+        <form ng-submit="ctrl.createAdmin()">
+          <div class="form-group">
+            <label for="usernameInput">Имя пользователя</label>
+            <input id="usernameInput"
+                   class="form-control"
+                   type="text"
+                   ng-model="ctrl.credentials.username"
+                   placeholder="Имя пользователя">
+          </div>
+
+          <div class="form-group">
+            <label for="passwordInput">Пароль</label>
+            <input id="passwordInput"
+                   class="form-control"
+                   type="password"
+                   ng-model="ctrl.credentials.password"
+                   placeholder="Пароль">
+          </div>
+
+          <div class="form-group">
+            <label for="emailInput">Почта</label>
+            <input id="emailInput"
+                   class="form-control"
+                   type="email"
+                   ng-model="ctrl.credentials.email"
+                   placeholder="Почта">
+          </div>
+
+          <div class="form-group">
+            <label for="NameInput">ФИО</label>
+            <input id="NameInput"
+                   class="form-control"
+                   type="text"
+                   ng-model="ctrl.credentials.first_name"
+                   placeholder="ФИО">
+          </div>
+
+          <div class="row-offset-0">
+            <button type="submit"
+                    class="form-control btn btn-success">
+              <span class="glyphicon glyphicon-plus"></span>
+              Создать администратора
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <hr class="primary">
+  </div>
+
+  <div class="loader"
+        ng-if="!ctrl.data">
+   </div>
+
+  <table class="row-offset-0 table table-bordered"
+         align="center"
+         ng-if="ctrl.data">
+    <tr class="info">
+      <th width="28%">Имя</th>
+      <th width="20%">Личный номер</th>
+      <th width="20%">Номер паспорта</th>
+      <th width="12%">Статус</th>
+      <th width="10%"></th>
+    </tr>
+    <tr>
+      <th>
+        <input type="text"
+               class="form-control form-control-small"
+               ng-model="ctrl.filterParams.name"
+               ng-keypress="ctrl.updateFilterParams($event.keyCode)">
+      </th>
+      <th>
+        <input type="text"
+               class="form-control form-control-small"
+               ng-model="ctrl.filterParams.in"
+               ng-keypress="ctrl.updateFilterParams($event.keyCode)">
+      </th>
+      <th class="text-center">
+        <input type="text"
+               class="form-control form-control-small"
+               ng-model="ctrl.filterParams.pn"
+               ng-keypress="ctrl.updateFilterParams($event.keyCode)">
+      </th>
+      <th class="text-center">
+        <div class="dropdown">
+          <select class="form-control form-control-small"
+                  ng-model="ctrl.filterParams.state"
+                  ng-change="ctrl.updateFilterParams(13)">
+            <option></option>
+            <option value="True">Активен</option>
+            <option value="False">Отключен</option>
+          </select>
+        </div>
+      </th>
+      <th></th>
+    </tr>
+    <tr ng-repeat="client in ctrl.data"
+        ng-class="client.scoring.level === 'success' ? 'success-light' :
+                  client.scoring.level === 'warning' ? 'warning-light' :
+                  client.scoring.level === 'danger' ? 'danger-light' : ''">
+      <td class="text-center">
+        <a href="/clients/{{client.id}}/"
+            class="link">
+          {{client.first_name}}
+        </a>
+      </td>
+      <td class="text-center">
+        {{client.profile.identification_number}}
+      </td>
+      <td class="text-center">
+        {{client.profile.passport_number}}
+      </td>
+      <td class="text-center">
+        <span ng-if="client.is_active">Активен</span>
+        <span ng-if="!client.is_active">Отключен</span>
+      </td>
+      <td>
+        <a href="/clients/{{client.id}}/"
+           class="stretch btn btn-info text-small">
+          <span class="glyphicon glyphicon-eye-open"></span>
+          Профайл
+        </a>
+        <a ng-if="!client.is_active && !client.processing"
+           class="stretch btn btn-success text-small row-offset-0"
+           ng-click="ctrl.activateClient(client)">
+          <span class="glyphicon glyphicon-plus"></span>
+          Активировать
+        </a>
+        <a ng-if="client.is_active && !client.processing"
+           class="stretch btn btn-warning text-small row-offset-0"
+           ng-click="ctrl.deactivateClient(client)">
+          <span class="glyphicon glyphicon-remove"></span>
+          Отключить
+        </a>
+        <a ng-if="user.user.is_superuser"
+           class="stretch btn btn-danger text-small row-offset-0"
+           ng-click="ctrl.deleteUser(client.id)">
+          <span class="glyphicon glyphicon-remove"></span>
+          Удалить
+        </a>
+        <div class="loader-small row-offset-0"
+             ng-if="client.processing">
+        </div>
+      </td>
+    </tr>
+  </table>
+ </section>
+</div>

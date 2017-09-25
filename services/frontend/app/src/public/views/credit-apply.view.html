@@ -1,0 +1,78 @@
+<div ng-controller="CreditApplicationController as ctrl"
+     ng-init="ctrl.getData()">
+  <section>
+    <h1>Оформление кредита</h1>
+    <form ng-submit="ctrl.apply()">
+      <div class="form-group">
+        <label for="account-control">Счет, на который поступят средства:</label>
+        <select class="form-control"
+                id="account-control"
+                ng-model="ctrl.account_id"
+                required>
+          <option></option>
+          <option ng-repeat="account in ctrl.accounts"
+                  value="{{account.id}}">
+            {{account.number}}
+            ({{ctrl.accountStatuses[account.status]}}, Остаток: {{account.residue}} {{account.residue_currency}})
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="amount-control">
+          Сумма
+          (минимум {{ctrl.template.min_amount.fixed}}, максимум {{ctrl.template.max_amount.fixed}}):
+        </label>
+        <input type="number"
+               class="form-control"
+               ng-model="ctrl.amount"
+               placeholder="Сумма"
+               id="amount-control"
+               min="{{ctrl.template.min_amount.fixed}}"
+               max="{{ctrl.template.max_amount.fixed}}"
+               required>
+      </div>
+
+      <div class="form-group">
+        <label for="duration-control">
+          Продолжительность, в месяцах (максимум {{ctrl.template.max_duration}})
+        </label>
+        <input type="number"
+               class="form-control"
+               ng-model="ctrl.duration"
+               placeholder="Продолжительность"
+               min="1"
+               max="{{ctrl.template.max_duration}}"
+               required
+               id="duration-control">
+      </div>
+
+      <div ng-if="!ctrl.template.issue_online" class="form-group">
+        <label for="ensuring-method-control">Способ обеспечения:</label>
+        <select class="form-control"
+                ng-model="ctrl.ensuringMethod"
+                id="ensuring-method-control"
+                required>
+          <option></option>
+          <option ng-repeat="(code, method) in ctrl.ensuringMethods"
+                  value="{{code}}">
+            {{method}}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <button ng-if="!ctrl.processing"
+                type="submit"
+                class="form-control btn btn-info button">
+          <span class="glyphicon glyphicon-ok"></span>
+          {{ctrl.template.issue_online ? "Подтвердить" : "Подать заявку"}}
+        </button>
+
+        <div class="loader-small"
+             ng-if="ctrl.processing">
+        </div>
+      </div>
+    </form>
+  </section>
+</div>

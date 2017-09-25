@@ -1,0 +1,209 @@
+<div ng-controller="DepositDetailController as ctrl"
+     ng-init="ctrl.getData()">
+  <section class="text-large">
+    <h1>Информация о вкладе</h1>
+    <hr class="primary">
+
+    <div class="row-offset-0">
+      <ul class="list-group">
+        <li class="list-group-item" ng-if="user.isAdmin()">
+          Клиент:
+            <a href="/clients/{{ctrl.deposit.client.id}}/">
+            {{ctrl.deposit.client.first_name}}
+          </a>
+        </li>
+        <li class="list-group-item">
+          План:
+            <a href="/deposit-templates/{{ctrl.deposit.template.id}}/">
+              {{ctrl.deposit.template.name}}
+            </a>
+        </li>
+        <li class="list-group-item">
+          Статус: {{ctrl.depositStatuses[ctrl.deposit.status]}}
+          <span ng-if="ctrl.canClose()">
+            <button class="btn button button-info" ng-click="ctrl.close()">Закрыть</button>
+          </span>
+        </li>
+        <li class="list-group-item">
+          Активен: {{ctrl.deposit.is_active ? "Да" : "Нет"}}
+        </li>
+        <li class="list-group-item">
+          Остаток: {{ctrl.deposit.amount}} {{ctrl.deposit.currency}}
+        </li>
+        <li class="list-group-item">
+          Открыт: {{ctrl.deposit.start_date | date : 'dd.MM.yyyy'}}
+        </li>
+        <li  class="list-group-item" ng-if="ctrl.deposit.description">
+          Описание: <p>{{ctrl.deposit.description}}</p>
+        </li>
+      </ul>
+
+      <div ng-if="ctrl.canResolveCreate()">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">Подтверждение заявки на создание</h3>
+          </div>
+          <div class="panel-body">
+            <form ng-submit="ctrl.resolveCreateClaim(resolveData.value, resolveData.cause)"
+                  ng-init="resolveData={value:'true'}">
+              <div class="form-group">
+                  <div class="radio">
+                    <label>
+                      <input type="radio" ng-model="resolveData.value" value="true">
+                      Подтвердить
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" ng-model="resolveData.value">
+                      Отклонить
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group" ng-if="!resolveData.value">
+                  <label for="create-cause-control">Причина:</label>
+                  <textarea id="create-cause-control"
+                            class="form-control"
+                            ng-model="resolveData.cause"></textarea>
+                </div>
+
+                <button ng-if="!ctrl.processing"
+                        type="submit"
+                        class="form-control btn btn-success button">
+                  Отправить
+                </button>
+
+                <div class="loader-small"
+                     ng-if="ctrl.processing">
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div ng-if="ctrl.canResolveClose()">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">Подтверждение заявки на закрытие</h3>
+          </div>
+          <div class="panel-body">
+            <form ng-submit="ctrl.resolveCloseClaim(resolveData.value, resolveData.cause)"
+                  ng-init="resolveData={value:'true'}">
+              <div class="form-group" >
+                  <div class="radio">
+                    <label>
+                      <input type="radio" ng-model="resolveData.value" value="true">
+                      Подтвердить
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" ng-model="resolveData.value">
+                      Отклонить
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group" ng-if="!resolveData.value">
+                  <label for="close-cause-control">Причина:</label>
+                  <textarea id="close-cause-control"
+                            class="form-control"
+                            ng-model="resolveData.cause"></textarea>
+                </div>
+
+                <button ng-if="!ctrl.processing"
+                        type="submit"
+                        class="form-control btn btn-success">
+                  <span class="glyphicon glyphicon-ok"></span>
+                  Отправить
+                </button>
+
+                <div class="loader-small"
+                     ng-if="ctrl.processing">
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div ng-if="user.isClient() &&
+                  ctrl.deposit.status == 0 &&
+                  ctrl.deposit.closing == 0">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h5 class="panel-title">Закрытие вклада</h5>
+          </div>
+          <div class="panel-body">
+            <form class="col-md-12"
+                  ng-submit="ctrl.close(account_id)">
+              <div class="form-group">
+                <label for="account-control">Счет:</label>
+                <select class="form-control"
+                        required
+                        ng-model="account_id"
+                        id="account-control">
+                  <option></option>
+                  <option ng-repeat="account in ctrl.accounts" value="{{account.id}}">
+                    {{account.number}}
+                    ({{ctrl.accountStatuses[account.status]}},
+                    Остаток: {{account.residue}} {{account.residue_currency}})
+                  </option>
+                </select>
+              </div>
+
+              <button type="submit"
+                      class="form-control btn btn-success">
+                <span class="glyphicon glyphicon-ok"></span>
+                Отправить заявку
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div ng-if="user.isClient() &&
+                  ctrl.deposit.status == 0 &&
+                  ctrl.deposit.additional_contributions">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h5 class="panel-title">Пополнение вклада</h5>
+          </div>
+          <div class="panel-body">
+            <form class="col-md-12" ng-submit="ctrl.pay(amount, account_id)">
+              <div class="form-group">
+                <label for="amount-control">Сумма ({{ctrl.deposit.amount_currency}}):</label>
+                <input id="amount-control"
+                       class="form-control"
+                       type="text"
+                       ng-model="amount"
+                       min="0"
+                       required>
+              </div>
+
+              <div class="form-group">
+                <label for="account-control-1">Счет:</label>
+                <select class="form-control"
+                        required
+                        ng-model="account_id"
+                        id="account-control-1">
+                  <option></option>
+                  <option ng-repeat="account in ctrl.accounts" value="{{account.id}}">
+                    {{account.number}}
+                    ({{ctrl.accountStatuses[account.status]}},
+                    Остаток: {{account.residue}} {{account.residue_currency}})
+                  </option>
+                </select>
+              </div>
+
+              <button type="submit"
+                      class="form-control btn btn-success">
+                <span class="glyphicon glyphicon-ok"></span>
+                Пополнить
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

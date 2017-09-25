@@ -1,0 +1,44 @@
+sudo: required
+
+language: python
+
+services:
+  - docker
+
+addons:
+  ssh_known_hosts:
+    - 40.86.79.192
+
+env:
+  DOCKER_COMPOSE_VERSION: 1.8.0
+
+before_install:
+  - sudo rm -rf /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
+install:
+  - docker build --force-rm -t jupiterapp/backend ./services/backend
+  - docker build --force-rm -t jupiterapp/frontend ./services/frontend
+  - docker build --force-rm -t jupiterapp/scoring ./services/scoring
+  - docker-compose -f docker-compose.build.yml up -d backend
+
+script:
+  - docker exec -ti $(docker-compose ps -q backend) ./init/run_tests.sh
+  - docker exec -ti $(docker-compose ps -q backend) ./init/run_lint.sh
+
+after_success:
+  - docker login -e 'cat.wants.meow@gmail.com' -u 'jupiterapp' -p 'nothingissomething'
+  - docker push jupiterapp/backend:latest
+  - docker push jupiterapp/frontend:latest
+  - docker push jupiterapp/scoring:latest
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: ci/deploy.sh
+  on:
+    branch: develop
+
+

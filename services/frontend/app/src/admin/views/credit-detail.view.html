@@ -1,0 +1,166 @@
+<div ng-controller="CreditDetailController as ctrl"
+     ng-init="ctrl.getData()">
+  <section class="text-large">
+    <h1>Информация о кредите</h1>
+    <hr class="primary">
+
+    <div class="row-offset-0">
+      <ul class="list-group">
+        <li class="list-group-item" ng-if="user.isAdmin()">
+          Клиент: <a href="/clients/{{ctrl.credit.client.id}}/">{{ctrl.credit.client.first_name}}</a>
+        </li>
+        <li class="list-group-item">
+          План:
+            <a href="/credit-templates/{{ctrl.credit.template.id}}/">
+              {{ctrl.credit.template.name}}
+            </a>
+        </li>
+        <li class="list-group-item">
+          Статус: {{ctrl.creditStatuses[ctrl.credit.status]}}
+          <span ng-if="ctrl.canClose()">
+            <button class="btn button button-info" ng-click="ctrl.close()">Закрыть</button>
+          </span>
+        </li>
+        <li class="list-group-item">
+          Общий остаток:
+          {{ctrl.credit.total}}
+          {{ctrl.credit.residue_currency}}
+        </li>
+        <li class="list-group-item">
+          Чистый остаток:
+          {{ctrl.credit.residue}}
+          {{ctrl.credit.residue_currency}}
+        </li>
+        <li class="list-group-item">
+          Проценты:
+          {{ctrl.credit.current_month_percents}}
+          {{ctrl.credit.current_month_percents_currency}}
+        </li>
+        <li class="list-group-item">
+          Штраф:
+          {{ctrl.credit.current_penalty}}
+          {{ctrl.credit.current_penalty_currency}}
+        </li>
+        <li class="list-group-item">
+          Итого выплачено:
+          {{ctrl.credit.total_sum}}
+          {{ctrl.credit.total_sum_currency}}
+        </li>
+        <li class="list-group-item">
+          Рекомендуемый месячный платеж:
+          {{ctrl.credit.minimum_monthly_pay}}
+          {{ctrl.credit.minimum_monthly_pay_currency}}
+        </li>
+        <li class="list-group-item">
+          Выплачано в этом месяце (без учета штрафа):
+          {{ctrl.credit.current_month_pay}}
+          {{ctrl.credit.current_month_pay_currency}}
+        </li>
+        <li class="list-group-item">
+          Платеж ожидается до: {{ctrl.credit.next_payment_term | date : 'dd.MM.yyyy'}}
+        </li>
+        <li class="list-group-item">
+          Открыт: {{ctrl.credit.start_date | date : 'dd.MM.yyyy'}}
+        </li>
+        <li class="list-group-item">
+          Длительность: {{ctrl.credit.duration}} месяцев
+        </li>
+        <li  class="list-group-item" ng-if="ctrl.credit.description">
+          Описание: <p>{{ctrl.credit.description}}</p>
+        </li>
+      </ul>
+
+      <div ng-if="user.isClient() && (ctrl.credit.status == 0 || ctrl.credit.status == 1)">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">Оплата</h3>
+          </div>
+          <div class="panel-body">
+            <form class="col-md-12" ng-submit="ctrl.pay(amount, account_id)">
+              <div class="form-group">
+                <label for="amount-control">Сумма ({{ctrl.credit.residue_currency}}):</label>
+                <input id="amount-control"
+                       class="form-control"
+                       type="text"
+                       ng-model="amount"
+                       min="0"
+                       required>
+              </div>
+
+              <div class="form-group">
+                <label for="account-control">Счет:</label>
+                <select class="form-control"
+                        required
+                        ng-model="account_id"
+                        id="account-control">
+                  <option></option>
+                  <option ng-repeat="account in ctrl.accounts" value="{{account.id}}">
+                    {{account.number}}
+                    ({{ctrl.accountStatuses[account.status]}},
+                    Остаток: {{account.residue}} {{account.residue_currency}})
+                  </option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <div class="row-offset-0">
+                  <button type="submit"
+                          class="form-control btn btn-info button">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    Оплатить
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div ng-if="ctrl.canResolve()">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">Подтверждение заявки на открытие</h3>
+          </div>
+          <div class="panel-body">
+            <form ng-submit="ctrl.resolveClaim(resolveData.value, resolveData.cause)">
+              <div class="form-group" ng-init="resolveData={value:'true'}">
+                <div class="radio">
+                  <label>
+                    <input type="radio" ng-model="resolveData.value" value="true">
+                    Подтвердить
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" ng-model="resolveData.value" name="value">
+                    Отклонить
+                  </label>
+                </div>
+              </div>
+              <div class="form-group" ng-if="!resolveData.value">
+                <label for="cause-control">Причина:</label>
+                <textarea id="cause-control"
+                          class="form-control"
+                          ng-model="resolveData.cause"></textarea>
+              </div>
+              <div class="form-group">
+                <div class="row-offset-0">
+                  <button ng-if="!ctrl.processing"
+                          type="submit"
+                          class="form-control btn btn-success">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    Отправить
+                  </button>
+
+                  <div class="loader-small"
+                     ng-if="ctrl.processing">
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

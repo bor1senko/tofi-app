@@ -1,0 +1,1 @@
+* * * * * python $BACKEND_PATH/manage.py runcrons >> /var/log/cron.log 2>&1

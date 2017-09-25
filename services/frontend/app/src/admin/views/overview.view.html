@@ -1,0 +1,123 @@
+<div ng-app="jupiter.admin"
+     ng-controller="OverviewController as ctrl"
+     ng-init="ctrl.getInfo()">
+<section>
+  <div ng-if="user.isAdmin()">
+    <div class="col-md-6 row-offset-0">
+      <div class="loader"
+           ng-if="!ctrl.statistics.users">
+      </div>
+
+      <div class="panel panel-danger"
+           ng-if="ctrl.statistics.users">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            Пользователи
+          </h3>
+        </div>
+        <div class="panel-body">
+          <h5>
+            Общее количество:
+            <a href="/clients/">
+              {{ctrl.statistics.users.total_count}}
+            </a>
+          </h5>
+          <h5 ng-repeat="(code, status) in ctrl.userStatuses">
+            {{status}}:
+            <a href="/clients/?state={{code}}">
+              {{ctrl.statistics.users.states_count[code]}}
+            </a>
+          </h5>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 row-offset-0">
+      <div class="loader"
+           ng-if="!ctrl.statistics.accounts">
+      </div>
+
+      <div class="panel panel-warning"
+           ng-if="ctrl.statistics.accounts">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            Счета
+          </h3>
+        </div>
+        <div class="panel-body">
+          <h5>
+            Общее количество:
+            <a href="/accounts/">
+              {{ctrl.statistics.accounts.total_count}}
+            </a>
+          </h5>
+          <h5 ng-repeat="(code, status) in ctrl.accountStatuses">
+            {{status}}:
+            <a href="/accounts/?status={{code}}">
+              {{ctrl.statistics.accounts.states_count[code]}}
+            </a>
+          </h5>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="loader"
+           ng-if="!ctrl.statistics.credits">
+      </div>
+
+      <div class="panel panel-success"
+           ng-if="ctrl.statistics.credits">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            Кредиты
+          </h3>
+        </div>
+        <div class="panel-body">
+          <h5>
+            Общее количество:
+            <a href="/credits/">
+              {{ctrl.statistics.credits.total_count}}
+            </a>
+          </h5>
+          <h5 ng-repeat="(code, status) in ctrl.creditStatuses">
+            {{status}}:
+            <a href="/credits/?status={{code}}">
+              {{ctrl.statistics.credits.states_count[code]}}
+            </a>
+          </h5>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="loader"
+           ng-if="!ctrl.statistics.deposits">
+      </div>
+
+      <div class="panel panel-info"
+           ng-if="ctrl.statistics.deposits">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            Вклады
+          </h3>
+        </div>
+        <div class="panel-body">
+            <h5>
+              Общее количество:
+              <a href="/deposits/">
+                {{ctrl.statistics.deposits.total_count}}
+              </a>
+            </h5>
+            <h5 ng-repeat="(code, status) in ctrl.depositStatuses">
+              {{status}}:
+              <a href="/deposits/?status={{code}}">
+                {{ctrl.statistics.deposits.states_count[code]}}
+              </a>
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

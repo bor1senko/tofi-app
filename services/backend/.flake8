@@ -1,0 +1,6 @@
+[flake8]
+exclude =
+    ./jupiter/settings/__init__.py,
+    ./manage.py
+max-complexity = 10
+max-line-length = 100
