@@ -7,11 +7,11 @@ db:
 
 
 scoring:
-  image: jupiterapp/scoring
+  image: bor1senko/scoring
 
 
 backend:
-  image: jupiterapp/backend
+  image: bor1senko/backend
   privileged: true
   ports:
     - "8000:8000"
@@ -22,17 +22,20 @@ backend:
     - DB_PORT=6000
     - SCORING_HOST=scoring
     - SCORING_PORT=8001
-    - SENDGRID_TOKEN=U0cuT0xoRXBNd3JSOGVJcVFJUG05MjItQS44RllmSWhnV19EbFRTUk4wRkw5QTZBUUMxWXFhbkF4eDA0ZW1DU25rc293
-    - SITE_HOST = https://jupiter-group.tk/
+    - SENDGRID_TOKEN=U0cuSEtNdUJDbWJTT0NtSUFQR0RLQ1NyQS50OW5NVDE4a0FKT2J4MlBLMDFWSjlEcV96ZDlHOFUtR1gwTWx3TkxQTGZ3
+    - SITE_HOST = https://iron-bank.me/
   links:
     - db:db
     - scoring:scoring
 
 
 frontend:
-  image: jupiterapp/frontend
+  image: bor1senko/frontend
   ports:
     - "80:80"
     - "443:443"
   links:
     - backend:backend
+  volumes:
+    - ./frontend/cert/iron-bank.crt:/etc/ssl/certs/jupiter.cert.pem
+    - ./frontend/cert/iron-bank.key:/etc/ssl/certs/jupiter.key.pem
