@@ -42,3 +42,17 @@ deploy:
     branch: develop
 
 
+
+frontend:
+  build: services/frontend
+  ports:
+    - "80:80"
+    - "443:443"
+  volumes:
+    - ./services/frontend/nginx/nginx.dev.conf:/etc/nginx/nginx.conf
+    - ./services/frontend/nginx/conf.d/:/etc/nginx/conf.d/
+    - ./services/frontend/entrypoint.sh:/frontend/app/entrypoint.sh
+    - ./services/frontend/app/:/frontend/app/
+  entrypoint: /frontend/app/entrypoint.sh
+  links:
+    - backend:backend

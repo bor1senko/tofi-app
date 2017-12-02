@@ -2,7 +2,7 @@
   "name": "jupiter",
   "version": "1.0.0",
   "description": "Jupiter credit system",
-  "author": "Jupiter Group <cat.wants.meow@gmail.com>",
+  "author": "Iron-Bank Group <i.borisenko97@gmail.com>",
   "dependencies": {
     "jquery": "3.1.x",
     "angular": "1.5.x",
