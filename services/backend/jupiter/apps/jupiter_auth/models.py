@@ -6,11 +6,15 @@ from os import environ
 from urllib2 import Request, urlopen
 
 from datetime import date
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.db import models
 from finance.utils import money_field
 from finance.models import Credit, FinanceSettings
 from jupiter_auth.utils import get_or_create_admins_group
+from django.utils.translation import ugettext_lazy as _
+
+import uuid
+import base64
 
 
 class User(AbstractUser):
@@ -119,6 +123,7 @@ class UserProfile(models.Model):
     income = money_field(default=1000)
     realty = models.TextField(null=True)
     job = models.TextField(null=True)
+    telegram = models.TextField(null=True)
     number_of_times_90_more_days_late = models.IntegerField(default=0)
     number_of_times_30_59_days_late = models.IntegerField(default=0)
     number_of_times_60_89_days_late = models.IntegerField(default=0)
@@ -135,3 +140,22 @@ class UserProfile(models.Model):
     class Meta:
         verbose_name = 'User profile'
         verbose_name_plural = 'User profiles'
+
+
+class ServiceAddOn(models.Model):
+    name = models.TextField(null=True)
+    token = models.TextField(null=True)
+    username = models.TextField(null=True, default='me')
+    is_superuser = models.BooleanField(default=True)
+
+    def has_perm(*args, **kwargs):
+        return True
+
+
+    def save(self, *args, **kwargs):
+        self.token = base64.b64encode(str(uuid.uuid4()))
+        super(ServiceAddOn, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = 'ServiceAddOn'
+        verbose_name_plural = 'ServiceAddOn'

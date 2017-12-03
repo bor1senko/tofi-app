@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
+
+from jupiter_auth.models import ServiceAddOn
+
 from django.contrib.auth import get_user_model
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import ValidationError, AuthenticationFailed
+
 
 
 def sign_in(username, password):
@@ -32,12 +36,34 @@ def get_token(request):
 
 class TokenAuthentication(BaseAuthentication):
 
-    def authenticate(self, request):
+    backends = ['authenticateToken', 'authenticateService']
+
+    def authenticateService(self, request):
+        key = get_token(request)
+        try:
+            service = ServiceAddOn.objects.get(token=key)
+            if not service:
+                raise Exception('Incorrect token2')
+            return service, None
+        except ServiceAddOn.DoesNotExist:
+            raise Exception('Incorrect token2')
+
+    def authenticateToken(self, request):
         key = get_token(request)
         try:
             token = Token.objects.select_related('user').get(key=key)
             if not token.user:
-                raise AuthenticationFailed('Incorrect token')
+                raise Exception('Incorrect token1')
             return token.user, token
         except Token.DoesNotExist:
+            raise Exception('Incorrect token1')
+
+    def authenticate(self, request):
+        for auth_name in self.backends:
+            auth_func = getattr(self, auth_name, None)
+            if auth_func:
+                try:
+                    return auth_func(request)
+                except Exception as e:
+                    continue
             raise AuthenticationFailed('Incorrect token')
