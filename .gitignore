@@ -1,2 +1,4 @@
 *.pyc
 .idea
+docker-compose.override.yml
+services/frontend/app/node_modules/
