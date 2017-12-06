@@ -5,13 +5,13 @@
           <div ng-controller="HomeController">
             <div>
                 <div uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
-                  <div uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id">
+                  <div style="height:40em;" uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id">
                     <!--<img ng-src="{{slide.video}}" style="margin:auto;height: 38em;">-->
-                    <video style="margin:auto;height: 38em;" autoplay loop>
+                    <video style="{{slide.styleHeight}}" autoplay loop>
                       <source ng-src="{{slide.video}}" type="video/mp4"/>
                     </video>
                     <div class="carousel-caption">
-                        <h4>{{slide.text}}</h4>
+                        <h4>{{slide.text}}  </h4>
                         <a href="/sign-in/" class="btn btn-success" style="margin:1em">
                                 <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
                             Авторизация
