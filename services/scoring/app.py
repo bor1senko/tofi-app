@@ -24,6 +24,7 @@ def scoring():
     except Exception as e:
         raise BadRequest("Scoring counting failed. Details: {}".format(e))
 
+
 cols = [
     u'RevolvingUtilizationOfUnsecuredLines',
     u'age',

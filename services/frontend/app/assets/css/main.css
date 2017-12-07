@@ -1,3 +1,30 @@
 .iron-bank-logo {
     height: 60px;
+    margin-top: -10px;
+}
+
+iron-bank-logo:hover {
+    margin-top: -19px;
+}
+
+.nav-tabs > li > a.a-nav-logo-item:hover{
+    border-color: transparent;
+}
+
+.nav > li > a.a-nav-logo-item:hover, .nav > li > a.a-nav-logo-item:focus {
+    background-color: transparent;
+}
+
+.auth-sign-in-marker {
+    color: #86949f;
+    position: absolute;
+    top: 7px;
+}
+
+.auth-sign-in-input {
+    padding-left: 20px;
+}
+
+.auth-form-group {
+    position: relative;
 }
