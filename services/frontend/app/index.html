@@ -16,7 +16,12 @@
 
   <title>Iron Bank сredit system</title>
 
-  <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+    <!--Material design -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <link rel="stylesheet" href="assets/addon/bootstrap-material-design/css/bootstrap-material-design.min.css" >
+    <!--end -->
+
+  <!--<link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css"/>-->
   <link rel="stylesheet" type="text/css" href="assets/addon/font-awesome/css/font-awesome.min.css"/>
   <link rel="stylesheet" type="text/css" href="assets/css/main.css"/>
   <link rel="stylesheet/less" type="text/css" href="assets/less/main.less"/>
@@ -76,72 +81,84 @@
   <script src="src/app.config.js"></script>
 </head>
 <body ng-app="jupiter">
+
 <div ng-controller="BaseController as baseCtrl">
   <div id="page-content">
     <div id="page-top" class="index">
-      <div class="container">
-        <nav id="mainNav"
-             class="navbar navbar-default  navbar-custom navbar-fixed-top">
-          <div class="navbar-header">
-            <button type="button"
-                    class="navbar-toggle collapsed"
-                    data-toggle="collapse"
-                    data-target="#navbar-main"
-                    aria-expanded="false">
-              <span class="sr-only">Меню</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
+      <div class="container-fluid">
+        <div class="container-fluid">
 
-            <a href="/"  class="navbar-brand">
-              <img  src="assets/img/Ironbank-logo.png" class="iron-bank-logo">
+          <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand" href="#">
+              <img src="assets/img/Ironbank-logo.png" height="30"
+                   class="d-inline-block align-top" alt="">
+
             </a>
+          </nav>
+        </div>
+
+        <!--<nav id="mainNav"-->
+             <!--class="navbar navbar-default  navbar-custom navbar-fixed-top">-->
+          <!--<div class="navbar-header">-->
+            <!--<button type="button"-->
+                    <!--class="navbar-toggle collapsed"-->
+                    <!--data-toggle="collapse"-->
+                    <!--data-target="#navbar-main"-->
+                    <!--aria-expanded="false">-->
+              <!--<span class="sr-only">Меню</span>-->
+              <!--<span class="icon-bar"></span>-->
+              <!--<span class="icon-bar"></span>-->
+              <!--<span class="icon-bar"></span>-->
+            <!--</button>-->
+
+            <!--<a href="/"  class="navbar-brand">-->
+              <!--<img  src="assets/img/Ironbank-logo.png" class="iron-bank-logo">-->
+            <!--</a>-->
 
 
-          </div>
+          <!--</div>-->
 
-          <div class="collapse navbar-collapse"
-               id="navbar-main"
-               style="margin-right: 30px;">
-            <ul class="nav navbar-nav navbar-right">
-              <li ng-if="!user.isAuthenticated()">
-                <a href="/deposit-templates/" class="navbar-link">
-                  <i class="fa fa-line-chart" aria-hidden="true"></i>
-                  Вклады
-                </a>
-              </li>
+          <!--<div class="collapse navbar-collapse"-->
+               <!--id="navbar-main"-->
+               <!--style="margin-right: 30px;">-->
+            <!--<ul class="nav navbar-nav navbar-right">-->
+              <!--<li ng-if="!user.isAuthenticated()">-->
+                <!--<a href="/deposit-templates/" class="navbar-link">-->
+                  <!--<i class="fa fa-line-chart" aria-hidden="true"></i>-->
+                  <!--Вклады-->
+                <!--</a>-->
+              <!--</li>-->
 
-              <li ng-if="!user.isAuthenticated()">
-                <a href="/credit-templates/" class="navbar-link">
-                  <i class="fa fa-credit-card" aria-hidden="true"></i>
-                  Кредиты
-                </a>
-              </li>
+              <!--<li ng-if="!user.isAuthenticated()">-->
+                <!--<a href="/credit-templates/" class="navbar-link">-->
+                  <!--<i class="fa fa-credit-card" aria-hidden="true"></i>-->
+                  <!--Кредиты-->
+                <!--</a>-->
+              <!--</li>-->
 
-              <li ng-if="!user.isAuthenticated()">
-                <a href="/sign-in/" class="navbar-link">
-                  <i class="fa fa-sign-in" aria-hidden="true"></i>
-                  Войти
-                </a>
-              </li>
+              <!--<li ng-if="!user.isAuthenticated()">-->
+                <!--<a href="/sign-in/" class="navbar-link">-->
+                  <!--<i class="fa fa-sign-in" aria-hidden="true"></i>-->
+                  <!--Войти-->
+                <!--</a>-->
+              <!--</li>-->
 
-              <li ng-if="!user.isAuthenticated()">
-                <a href="/sign-up/" class="navbar-link">
-                  <i class="fa fa-user-plus" aria-hidden="true"></i>
-                  Зарегистрироваться
-                </a>
-              </li>
+              <!--<li ng-if="!user.isAuthenticated()">-->
+                <!--<a href="/sign-up/" class="navbar-link">-->
+                  <!--<i class="fa fa-user-plus" aria-hidden="true"></i>-->
+                  <!--Зарегистрироваться-->
+                <!--</a>-->
+              <!--</li>-->
 
-              <li ng-if="user.isAuthenticated()">
-                <a href="javascript:void(0)" ng-click="auth.signOut()" class="navbar-link">
-                  <span class="glyphicon glyphicon-log-out"></span>
-                  Выйти
-                </a>
-              </li>
-            </ul>
-          </div>
-        </nav>
+              <!--<li ng-if="user.isAuthenticated()">-->
+                <!--<a href="javascript:void(0)" ng-click="auth.signOut()" class="navbar-link">-->
+                  <!--<span class="glyphicon glyphicon-log-out"></span>-->
+                  <!--Выйти-->
+                <!--</a>-->
+              <!--</li>-->
+            <!--</ul>-->
+          <!--</div>-->
+        <!--</nav>-->
       </div>
     </div>
 

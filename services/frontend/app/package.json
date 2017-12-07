@@ -10,6 +10,7 @@
     "bootstrap": "^3.3.7",
     "ngstorage": "0.3.x",
     "less": "2.7.x",
-    "angular-bootstrap": "0.12.x"
+    "angular-bootstrap": "0.12.x",
+    "bootstrap-material-design": "4.0.0-beta.4"
   }
 }
