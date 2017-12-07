@@ -1,4 +1,4 @@
-<div >
+  <div >
 
     <div class="header">
         <div ng-app="ui.bootstrap.core">
@@ -6,20 +6,9 @@
             <div>
                 <div uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
                   <div uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id">
-                    <!--<img ng-src="{{slide.video}}" style="margin:auto;height: 38em;">-->
-                    <video style="margin:auto;height: 38em;" autoplay loop>
-                      <source ng-src="{{slide.video}}" type="video/mp4"/>
-                    </video>
+                      <img style="margin:auto; " ng-src="{{slide.video}}" style="margin:auto;">
                     <div class="carousel-caption">
                         <h4>{{slide.text}}</h4>
-                        <a href="/sign-in/" class="btn btn-success" style="margin:1em">
-                                <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
-                            Авторизация
-                        </a>
-                        <a href="/sign-up/" class="btn btn-success" style="margin:1em">
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                            Регистрация
-                        </a>
                     </div>
                   </div>
                 </div>
@@ -84,26 +73,37 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-8 col-sm-offset-2 text-center">
-          <h2 class="section-heading">Контакты</h2>
+          <h2 class="section-heading">Консультация Iron-Bank  <i class="fa fa-university" aria-hidden="true"></i></h2>
           <p class="section-text">
-            Есть вопросы или предложения?
-            Звоните, пишите, все что угодно.
-            Мы доступны в любое время года из любой точки вселенной
-          </p>
-        </div>
-
-        <div class="col-sm-4 col-sm-offset-2 text-center">
-          <img src="assets/img/phone.icon.png" class="section-image-small">
-          <p class="section-text">152</p>
-        </div>
-
-        <div class="col-sm-4 text-center">
-          <img src="assets/img/email.icon.png" class="section-image-small">
-          <p class="section-text">
-            <a href="mailto:cat.wants.meow@gmail.com">feedback@iron-bank.me</a>
+            Мы способны найти выгодное для вас финансовое решение: за счет большого спектра услуг и индивидуального подхода
           </p>
         </div>
       </div>
+          <div class="row">
+          <div class="col-sm-4  text-center">
+              <i style="font-size: 8em" class="fa fa-phone-square" aria-hidden="true"></i>
+              <p class="section-text">152</p>
+          </div>
+
+          <div class="col-sm-4  text-center">
+             <i style="font-size: 8em" class="fa fa-mobile" aria-hidden="true"></i>
+              <p class="section-text">152-52-52</p>
+              <p style="margin-top: -15px; color: #999999; font-size: 14px" class="section-text">velcom, life, mtc</p>
+          </div>
+
+          <div class="col-sm-4 text-center">
+              <i style="font-size: 8em" class="fa fa-envelope-square" aria-hidden="true"></i>
+              <p class="section-text" style="padding-left: 0; padding-right: 0;">
+                  <a style="color: white;" href="mailto:cat.wants.meow@gmail.com">feedback@iron-bank.me</a>
+              </p>
+          </div>
+      </div>
     </div>
+      <div class="col-sm-12  col-lg-12 col-md-12 text-center">
+          <p>
+              <i style="color: red;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+              все данные представленные на сайте фейковые.
+          </p>
+      </div>
   </section>
 </div>
