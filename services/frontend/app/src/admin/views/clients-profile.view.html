@@ -43,10 +43,11 @@
              class="tab-pane row-offset-0"
              id="tabStatistics"
              role="tabpanel">
-          <div ng-class="ctrl.data.scoring.level === 'success' ? 'panel panel-success' :
-                         ctrl.data.scoring.level === 'warning' ? 'panel panel-warning' :
-                         ctrl.data.scoring.level === 'danger' ? 'panel panel-danger' :
-                         'panel panel-default'">
+          <!--<div ng-class="ctrl.data.scoring.level === 'success' ? 'panel panel-success' :-->
+                         <!--ctrl.data.scoring.level === 'warning' ? 'panel panel-warning' :-->
+                         <!--ctrl.data.scoring.level === 'danger' ? 'panel panel-danger' :-->
+                         <!--'panel panel-default'">-->
+          <div class="panel">
             <div class="panel-heading">
               <h5 class="panel-title">Платежеспособность:</h5>
             </div>
@@ -79,11 +80,13 @@
               <h5 class="panel-title">
                 Общее количество кредитов:
                 {{ctrl.statistics.credits.total_count}}
-                <a class="link" href="/credits/?client_id={{ctrl.data.id}}"> (Просмотреть)</a>
+                <a class="link" href="/credits/?client_id={{ctrl.data.id}}">
+                  <i class="fa fa-info-circle" aria-hidden="true"></i>
+                </a>
               </h5>
             </div>
             <div class="panel-body" style="padding-bottom: 10px;">
-              <table width="100%" class="table table-bordered table-responsive">
+              <table width="100%" class="table table-hover table-responsive">
                 <tr>
                   <th width="45%">Статус</th>
                   <th width="45%">Количество</th>
@@ -93,9 +96,9 @@
                   <td>{{status}}</td>
                   <td>{{ctrl.statistics.credits.states_count[code]}}</td>
                   <td>
-                    <a href="/credits/?client_id={{ctrl.data.id}}&status={{code}}"
-                       class="btn btn-info button">
-                      Просмотреть
+                    <a ng-if="ctrl.statistics.credits.states_count[code]!==0" href="/credits/?client_id={{ctrl.data.id}}&status={{code}}"
+                       class="btn button">
+                      <i class="fa fa-info-circle" aria-hidden="true"></i>
                     </a>
                   </td>
                 </tr>
@@ -123,11 +126,13 @@
               <h5 class="panel-title">
                 Общее количество вкладов:
                 {{ctrl.statistics.deposits.total_count}}
-                <a class="link" href="/deposits/?client_id={{ctrl.data.id}}"> (Просмотреть)</a>
+                <a class="link" href="/deposits/?client_id={{ctrl.data.id}}">
+                  <i class="fa fa-info-circle" aria-hidden="true"></i>
+                </a>
               </h5>
             </div>
             <div class="panel-body" style="padding-bottom: 0px;">
-              <table width="100%" class="table table-bordered">
+              <table width="100%" class="table table-hover">
                 <tr>
                   <th width="45%">Статус</th>
                   <th width="45%">Количество</th>
@@ -137,9 +142,9 @@
                   <td>{{status}}</td>
                   <td>{{ctrl.statistics.deposits.states_count[code]}}</td>
                   <td>
-                    <a href="/deposits/?client_id={{ctrl.data.id}}&status={{code}}"
-                       class="btn btn-info button">
-                      Просмотреть
+                    <a ng-if="ctrl.statistics.deposits.states_count[code]!==0" href="/deposits/?client_id={{ctrl.data.id}}&status={{code}}"
+                       class="btn button">
+                      <i class="fa fa-info-circle" aria-hidden="true"></i>
                     </a>
                   </td>
                 </tr>
@@ -151,12 +156,14 @@
             <div class="panel-heading">
               <h5>
                 Общее количество транзакций:
-                {{ctrl.statistics.transactions.total_count}}
-                <a class="link" href="/transactions/?client_id={{ctrl.data.id}}"> (Просмотреть)</a>
+                {{ctrl.statistics.transactions.total_count}} 
+                <a class="link" href="/transactions/?client_id={{ctrl.data.id}}">
+                  <i class="fa fa-info-circle" aria-hidden="true"></i>
+                </a>
               </h5>
             </div>
             <div class="panel-body" style="padding-bottom: 0px;">
-              <table width="100%" class="table table-bordered">
+              <table width="100%" class="table table-hover">
                 <tr>
                   <th width="45%">Статус</th>
                   <th width="45%">Количество</th>
@@ -166,9 +173,9 @@
                   <td>{{status}}</td>
                   <td>{{ctrl.statistics.transactions.states_count[code]}}</td>
                   <td>
-                    <a href="/transactions/?client_id={{ctrl.data.id}}&type={{code}}"
-                       class="btn btn-info button">
-                      Просмотреть
+                    <a ng-if="ctrl.statistics.transactions.states_count[code]!==0" href="/transactions/?client_id={{ctrl.data.id}}&type={{code}}"
+                       class="btn button">
+                      <i class="fa fa-info-circle" aria-hidden="true"></i>
                     </a>
                   </td>
                 </tr>
@@ -345,28 +352,30 @@
             </div>
             <hr class="primary">
 
-            <div class="row-offset-0">
+            <div class="row">
+            <div class="col-sm-3 col-sm-offset-4">
               <button type="submit"
-                      class="form-control btn btn-success">
-                <span class='glyphicon glyphicon-ok'></span>
-                Сохранить
+                      class="form-control btn btn-info">
+                <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                Save Profile Data
               </button>
             </div>
 
-            <div class="row-offset-0" ng-if="user.user.is_superuser">
+            <div class="col-sm-3 col-sm-offset-4" ng-if="user.user.is_superuser">
               <a ng-click="ctrl.deleteUser(ctrl.data.id)"
-                      class="form-control btn btn-danger">
+                      class="form-control btn">
                 <span class='glyphicon glyphicon-remove'></span>
-                Удалить
+                Remove
               </a>
             </div>
 
-            <div class="row-offset-0" ng-if="user.isAdmin()">
-              <a href="/clients/"
-                 class="form-control btn btn-warning button">
-                <span class='glyphicon glyphicon-log-out'></span>
-                Назад
-              </a>
+            <!--<div class="col-sm-3" ng-if="user.isAdmin()">-->
+              <!--<a href="/clients/"-->
+                 <!--class="form-control btn button">-->
+                <!--<span class='glyphicon glyphicon-log-out'></span>-->
+                <!--Back-->
+              <!--</a>-->
+            <!--</div>-->
             </div>
           </form>
         </div>
@@ -401,7 +410,7 @@
             </div>
 
             <div class="form-group">
-              <label for="newPasswordConfirmInput">Новый пароль</label>
+              <label for="newPasswordConfirmInput">Подтвердите пароль</label>
               <input id="newPasswordConfirmInput"
                      class="form-control"
                      type="password"
@@ -411,7 +420,7 @@
 
             <div class="row-offset-0">
               <button type="submit"
-                      class="form-control btn btn-success button">
+                      class="form-control btn button">
                  <span class="glyphicon glyphicon-ok"></span>
                  Изменить пароль
               </button>

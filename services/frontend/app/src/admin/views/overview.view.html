@@ -5,12 +5,12 @@
   <div ng-if="user.isAdmin()">
     <div class="container">
     <div class="row">
-    <div class="col-md-8 offset-md-4">
+    <div class="col-md-8 col-md-offset-1">
       <div class="loader"
            ng-if="!ctrl.statistics.users">
       </div>
 
-      <div class="panel panel-danger"
+      <div class="panel panel-defaul"
            ng-if="ctrl.statistics.users">
         <div class="panel-heading">
           <h3 class="panel-title">
@@ -24,6 +24,20 @@
               {{ctrl.statistics.users.total_count}}
             </a>
           </h5>
+          <!--<a href="/clients/">-->
+          <!--<div class="row">-->
+          <!--<div class="col-md-6">-->
+            <!--<h5>-->
+            <!--Общее количество:-->
+            <!--</h5>-->
+          <!--</div>-->
+          <!--<div class="col-md-6">-->
+            <!--<h5>-->
+              <!--{{ctrl.statistics.users.total_count}}-->
+            <!--</h5>-->
+          <!--</div>-->
+          <!--</div>-->
+          <!--</a>-->
           <h5 ng-repeat="(code, status) in ctrl.userStatuses">
             {{status}}:
             <a href="/clients/?state={{code}}">
@@ -36,12 +50,12 @@
     </div>
 
     <div class="row">
-    <div class="col-md-8 offset-md-4">
+    <div class="col-md-8 col-md-offset-1">
       <div class="loader"
            ng-if="!ctrl.statistics.accounts">
       </div>
 
-      <div class="panel panel-warning"
+      <div class="panel panel-defaul"
            ng-if="ctrl.statistics.accounts">
         <div class="panel-heading">
           <h3 class="panel-title">
@@ -67,12 +81,12 @@
     </div>
 
     <div class="row">
-    <div class="col-md-8 offset-md-4">
+    <div class="col-md-8 col-md-offset-1">
       <div class="loader"
            ng-if="!ctrl.statistics.credits">
       </div>
 
-      <div class="panel panel-success"
+      <div class="panel panel-defaul"
            ng-if="ctrl.statistics.credits">
         <div class="panel-heading">
           <h3 class="panel-title">
@@ -98,12 +112,12 @@
     </div>
 
     <div class="row">
-    <div class="col-md-8 offset-md-4">
+    <div class="col-md-8 col-md-offset-1">
       <div class="loader"
            ng-if="!ctrl.statistics.deposits">
       </div>
 
-      <div class="panel panel-info"
+      <div class="panel panel-defaul"
            ng-if="ctrl.statistics.deposits">
         <div class="panel-heading">
           <h3 class="panel-title">
