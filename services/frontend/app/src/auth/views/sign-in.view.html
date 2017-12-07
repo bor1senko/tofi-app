@@ -2,11 +2,9 @@
      ng-controller="SignInController as ctrl" style="display: flex;height: 90vh;align-items: center;justify-content: center;">
   <div class="container">
     <div class="row" style="align-items: center;justify-content: center;">
-      <div class="panel panel-info">
-        <div class="panel-heading">
-          <h4 class="panel-title">Вход</h4>
-        </div>
-        <div class="panel-body">
+      <div class="card panel-info">
+        <div class="card-body">
+          <h4 class="card-title">Вход</h4>
           <form  ng-submit="ctrl.signIn()">
             <div class="form-group">
               <label for="usernameInput">Имя пользователя</label>
