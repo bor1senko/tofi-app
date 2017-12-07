@@ -72,14 +72,16 @@
          align="center"
          ng-if="ctrl.data">
     <thead>
-    <tr class="">
-      <th width="28%">Имя</th>
+    <tr>
+      <th width="14%">Профайл</th>
+      <th width="14%">Имя</th>
       <th width="20%">Личный номер</th>
       <th width="20%">Номер паспорта</th>
       <th width="12%">Статус</th>
       <th width="10%"></th>
     </tr>
     <tr>
+      <th></th>
       <th>
         <input type="text"
                class="form-control form-control-small"
@@ -122,12 +124,14 @@
         <!--ng-class="client.scoring.level === 'success' ? 'success-light' :-->
                   <!--client.scoring.level === 'warning' ? 'warning-light' :-->
                   <!--client.scoring.level === 'danger' ? 'danger-light' : ''"  -->
-      {{client.id}}
       <td class="text-center">
         <a href="/clients/{{client.id}}/"
             class="link">
-          {{client.first_name}}
+          <i class="fa fa-address-card-o" aria-hidden="true"></i>
         </a>
+      </td>
+      <td class="text-center">
+        {{client.first_name}}
       </td>
       <td class="text-center">
         {{client.profile.identification_number}}
