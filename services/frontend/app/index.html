@@ -6,7 +6,9 @@
   <base href="/">
   <title>Iron Bank сredit system</title>
 
-  <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+  <link rel="stylesheet" href="node_modules/bootstrap-material-design/dist/css/bootstrap-material-design.min.css" integrity="sha384-R80DC0KVBO4GSTw+wZ5x2zn2pu4POSErBkf8/fSFhPXHxvHJydT0CSgAP2Yo2r4I" crossorigin="anonymous">
+
   <link rel="stylesheet/less" type="text/css" href="assets/less/main.less"/>
 
   <script src="node_modules/jquery/dist/jquery.min.js"></script>
@@ -56,67 +58,43 @@
 <div ng-controller="BaseController as baseCtrl">
   <div id="page-content">
     <div id="page-top" class="index">
-      <div class="container">
-        <nav id="mainNav"
-             class="navbar navbar-default  navbar-custom navbar-fixed-top">
-          <div class="navbar-header">
-            <button type="button"
-                    class="navbar-toggle collapsed"
-                    data-toggle="collapse"
-                    data-target="#navbar-main"
-                    aria-expanded="false">
-              <span class="sr-only">Меню</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a href="/" class="navbar-brand">
-              <span class="glyphicon glyphicon-home"></span>
-            </a>
-          </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="/">Iron Bank</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-          <div class="collapse navbar-collapse"
-               id="navbar-main"
-               style="margin-right: 30px;">
-            <ul class="nav navbar-nav navbar-right">
-              <li ng-if="!user.isAuthenticated()">
-                <a href="/deposit-templates/" class="navbar-link">
-                  <span class="glyphicon glyphicon-piggy-bank"></span>
-                  Вклады
-                </a>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item" ng-if="!user.isAuthenticated()">
+                <a href="/deposit-templates/" class="nav-link"> Вклады</a>
               </li>
 
-              <li ng-if="!user.isAuthenticated()">
-                <a href="/credit-templates/" class="navbar-link">
-                  <span class="glyphicon glyphicon-credit-card"></span>
-                  Кредиты
-                </a>
-              </li>
-
-              <li ng-if="!user.isAuthenticated()">
-                <a href="/sign-in/" class="navbar-link">
-                  <span class="glyphicon glyphicon-log-in"></span>
-                  Войти
-                </a>
-              </li>
-
-              <li ng-if="!user.isAuthenticated()">
-                <a href="/sign-up/" class="navbar-link">
-                  <span class="glyphicon glyphicon-user"></span>
-                  Зарегистрироватся
-                </a>
-              </li>
-
-              <li ng-if="user.isAuthenticated()">
-                <a href="javascript:void(0)" ng-click="auth.signOut()" class="navbar-link">
-                  <span class="glyphicon glyphicon-log-out"></span>
-                  Выйти
-                </a>
+              <li class="nav-item" ng-if="!user.isAuthenticated()">
+                <a href="/credit-templates/" class="nav-link">Кредиты</a>
               </li>
             </ul>
+            <form class="form-inline">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item" ng-if="!user.isAuthenticated()">
+                  <a href="/sign-in/" class="nav-link">Войти</a>
+                </li>
+
+                <li class="nav-item" ng-if="!user.isAuthenticated()">
+                  <a href="/sign-up/" class="nav-link">
+                    Зарегистрироватся
+                  </a>
+                </li>
+
+                <li class="nav-item" ng-if="user.isAuthenticated()">
+                  <a href="javascript:void(0)" ng-click="auth.signOut()" class="nav-link">
+                    Выйти
+                  </a>
+                </li>
+              </ul>
+            </form>
           </div>
         </nav>
-      </div>
     </div>
 
     <div ng-if="user.isAuthenticated()"
