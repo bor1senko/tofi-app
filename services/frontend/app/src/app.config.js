@@ -37,7 +37,9 @@ var app = angular.module(
         "jupiter.core",
         "jupiter.auth",
         "jupiter.public",
-        "jupiter.admin"
+        "jupiter.admin",
+        'ngMaterial',
+        'ngMessages'
     ]
 );
 app.config(function ($routeProvider, $locationProvider) {
