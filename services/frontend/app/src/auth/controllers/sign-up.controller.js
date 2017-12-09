@@ -1,6 +1,11 @@
 module = angular.module("jupiter.auth");
 module.controller('SignUpController', SignUpController);
 
+// angular.module("jupiter.auth",['ngMaterial', 'ngMessages'] ).controller('AppCtrl', function() {
+//   this.myDate = new Date();
+//   this.isOpen = false;
+// });
+
 function SignUpController($auth, $error, $scope, $filter) {
     this.data = {
         username: "",
@@ -10,6 +15,9 @@ function SignUpController($auth, $error, $scope, $filter) {
         first_name: "",
         last_name: ""
     };
+
+    this.myDate = new Date();
+  this.isOpen = false;
 
     $scope.togglePassportExpiresPicker = function($event) {
         $event.preventDefault();
