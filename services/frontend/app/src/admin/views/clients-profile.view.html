@@ -256,7 +256,7 @@
               <div id="birthDateInput">
                 <md-datepicker
                   type="text"
-                  class="test-width-datepicker form-control"
+                  class="test-width-datepicker"
                   ng-model="ctrl.data.profile.birth_date"
                   is-open="birthDatePickerOpened"
                   ng-required="true"
@@ -296,26 +296,39 @@
 
             <div class="form-group">
               <label for="passportExpiresDateInput">Срок действия паспорта</label>
-              <p class="input-group" id="passportExpiresDateInput">
-                <input type="text"
-                       class="form-control"
-                       ng-model="ctrl.data.profile.passport_expires"
-                       datepicker-popup="dd.MM.yyyy"
-                       show-weeks="false"
-                       is-open="passportExpiresPickerOpened"
-                       ng-required="true"
-                       placeholder="Срок действия паспорта"
-                       required
-                       ng-disabled="user.isClient()">
-                <span class="input-group-btn">
-                  <button type="button"
-                          class="btn btn-default"
-                          ng-click="togglePassportExpiresPicker($event)"
-                          ng-disabled="user.isClient()">
-                    <i class="glyphicon glyphicon-calendar"></i>
-                  </button>
-                </span>
-              </p>
+
+              <div id="passportExpiresDateInput">
+                <md-datepicker
+                  type="text"
+                  class="test-width-datepicker"
+                  ng-model="ctrl.data.profile.passport_expires"
+                  is-open="passportExpiresPickerOpened"
+                  ng-required="true"
+                  md-placeholder="Срок действия паспорта"
+                  ng-disabled="user.isClient()">
+                </md-datepicker>
+              </div>
+
+              <!--<p class="input-group" id="passportExpiresDateInput">-->
+                <!--<input type="text"-->
+                       <!--class="form-control"-->
+                       <!--ng-model="ctrl.data.profile.passport_expires"-->
+                       <!--datepicker-popup="dd.MM.yyyy"-->
+                       <!--show-weeks="false"-->
+                       <!--is-open="passportExpiresPickerOpened"-->
+                       <!--ng-required="true"-->
+                       <!--placeholder="Срок действия паспорта"-->
+                       <!--required-->
+                       <!--ng-disabled="user.isClient()">-->
+                <!--<span class="input-group-btn">-->
+                  <!--<button type="button"-->
+                          <!--class="btn btn-default"-->
+                          <!--ng-click="togglePassportExpiresPicker($event)"-->
+                          <!--ng-disabled="user.isClient()">-->
+                    <!--<i class="glyphicon glyphicon-calendar"></i>-->
+                  <!--</button>-->
+                <!--</span>-->
+              <!--</p>-->
             </div>
 
             <div class="form-group">

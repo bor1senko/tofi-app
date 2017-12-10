@@ -66,6 +66,9 @@ function ClientsController($http, $error, $auth, $routeParams,
                 ctrl.data = response.data;
                 $error.clearErrors();
 
+                ctrl.data.profile.birth_date = new Date(ctrl.data.profile.birth_date);
+                ctrl.data.profile.passport_expires = new Date(ctrl.data.profile.passport_expires);
+
                 $('.tab-link').click(function (e) {
                     e.preventDefault();
                     $(this).tab('show')
@@ -110,10 +113,10 @@ function ClientsController($http, $error, $auth, $routeParams,
 
     this.updateClient = function() {
         var birthDate = ctrl.data.profile.birth_date;
-        ctrl.data.profile.birth_date = $filter('date')(birthDate, 'MM/dd/yyyy');//'yyyy-MM-dd');
+        ctrl.data.profile.birth_date = $filter('date')(birthDate, 'yyyy-MM-dd');
 
         var passportExpires = ctrl.data.profile.passport_expires;
-        ctrl.data.profile.passport_expires = $filter('date')(passportExpires, 'MM/dd/yyyy');//'yyyy-MM-dd');
+        ctrl.data.profile.passport_expires = $filter('date')(passportExpires, 'yyyy-MM-dd');
 
         $http.patch($auth.addUrlAuth('/api/users/' +  $routeParams['id'] + '/'), ctrl.data).then(
             function success(response) {
