@@ -38,6 +38,7 @@ function SignUpController($auth, $error, $scope, $filter) {
                     'Ваша заявка на регистрацию принята.' +
                     'После подтверждения вам на почту будет выслано уведомление.'
                 );
+
             },
             function error(response) {
                 ctrl.success = false;
