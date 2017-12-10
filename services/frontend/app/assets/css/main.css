@@ -29,6 +29,15 @@ iron-bank-logo:hover {
     position: relative;
 }
 
-.test-width-datepicker {
-    
+md-datepicker#passportExpiresDateInput {
+    margin-left: -12px;
+}
+
+md-datepicker#passportExpiresDateInput .md-datepicker-input-container {
+    width: 88%;
+}
+
+
+md-datepicker#passportExpiresDateInput .md-datepicker-input-container .md-datepicker-input {
+    width: 100%;
 }
