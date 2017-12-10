@@ -18,7 +18,7 @@ function PasswordResetController($auth, $error, $location) {
         ctrl.processing = true;
         setTimeout(function(){
             $auth.passwordReset(
-            this.reset_data,
+            ctrl.reset_data,
             function success(response) {
                 $location.path('/password-reset-confirm/');
                 $error.clearErrors();
