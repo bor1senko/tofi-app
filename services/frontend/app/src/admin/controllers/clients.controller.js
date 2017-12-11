@@ -66,6 +66,9 @@ function ClientsController($http, $error, $auth, $routeParams,
                 ctrl.data = response.data;
                 $error.clearErrors();
 
+                ctrl.data.profile.birth_date = new Date(ctrl.data.profile.birth_date);
+                ctrl.data.profile.passport_expires = new Date(ctrl.data.profile.passport_expires);
+
                 $('.tab-link').click(function (e) {
                     e.preventDefault();
                     $(this).tab('show')

@@ -7,32 +7,34 @@
 
     <div class="row-offset-0">
       <ul class="nav nav-tabs" role="tablist" id="tabsHeader">
-        <li role="presentation" class="active">
+        <li role="presentation" class="nav-item">
            <a href="#tabProfile"
               aria-controls="tabProfile"
               role="tab"
               data-toggle="tab"
-              class="tab-link">
+              class="nav-link tab-link active">
              Личные данные
            </a>
         </li>
         <li role="presentation"
+            class="nav-item"
             ng-if="user.isAdmin() && !user.user.is_superuser">
           <a href="#tabStatistics"
              aria-controls="tabStatistics"
              role="tab"
              data-toggle="tab"
-             class="tab-link">
+             class="nav-link tab-link">
             Статистика
           </a>
         </li>
         <li role="presentation"
+            class="nav-item"
             ng-if="user.isClient() || user.user.is_superuser">
           <a href="#tabChangePassword"
              aria-controls="tabChangePassword"
              role="tab"
              data-toggle="tab"
-             class="tab-link">
+             class="nav-link tab-link">
             Изменение пароля
           </a>
         </li>
@@ -43,47 +45,72 @@
              class="tab-pane row-offset-0"
              id="tabStatistics"
              role="tabpanel">
-          <div ng-class="ctrl.data.scoring.level === 'success' ? 'panel panel-success' :
-                         ctrl.data.scoring.level === 'warning' ? 'panel panel-warning' :
-                         ctrl.data.scoring.level === 'danger' ? 'panel panel-danger' :
-                         'panel panel-default'">
-            <div class="panel-heading">
-              <h5 class="panel-title">Платежеспособность:</h5>
+          <!--<div ng-class="ctrl.data.scoring.level === 'success' ? 'panel panel-success' :-->
+                         <!--ctrl.data.scoring.level === 'warning' ? 'panel panel-warning' :-->
+                         <!--ctrl.data.scoring.level === 'danger' ? 'panel panel-danger' :-->
+                         <!--'panel panel-default'">-->
+          <div class="card">
+            <div class="card-header">
+              <h3>Платежеспособность</h3>
             </div>
 
-            <div class="panel-body">
-              <span ng-if="ctrl.data.scoring.level === 'success'">
-                <b>Платежеспособность высокая:</b>
-                вероятность выплат по кредитам без штрафов -
-                {{ctrl.data.scoring.scoring_result * 100}}%
-              </span>
+            <div class="card-body">
+              <b class="card-title">Платежеспособность {{
+                {
+                  'success': 'высокая',
+                  'warning': 'средняя',
+                  'danger': 'низкая'
+                }[ctrl.data.scoring.level]
+              }}
+              </b>
 
-              <span ng-if="ctrl.data.scoring.level === 'warning'">
-                <b>Платежеспособность средняя:</b>
-                вероятность выплат по кредитам без штрафов -
-                {{ctrl.data.scoring.scoring_result * 100}}%
-              </span>
-
-              <span ng-if="ctrl.data.scoring.level === 'danger'">
-                <b>Платежеспособность низкая:</b>
-                вероятность выплат по кредитам без штрафов -
-                {{ctrl.data.scoring.scoring_result * 100}}%
-              </span>
+              <p class="card-text">
+                Вероятность выплат по кредитам без штрафов -
+                {{(ctrl.data.scoring.scoring_result * 100).toFixed(3)}}%
+              </p>
             </div>
           </div>
 
+          <!--<div class="panel">-->
+            <!--<div class="panel-heading">-->
+              <!--<h5 class="panel-title">Платежеспособность:</h5>-->
+            <!--</div>-->
 
-          <div class="panel panel-default"
+            <!--<div class="panel-body">-->
+              <!--<span ng-if="ctrl.data.scoring.level === 'success'">-->
+                <!--<b>Платежеспособность высокая:</b>-->
+                <!--вероятность выплат по кредитам без штрафов - -->
+                <!--{{ctrl.data.scoring.scoring_result * 100}}%-->
+              <!--</span>-->
+
+              <!--<span ng-if="ctrl.data.scoring.level === 'warning'">-->
+                <!--<b>Платежеспособность средняя:</b>-->
+                <!--вероятность выплат по кредитам без штрафов - -->
+                <!--{{ctrl.data.scoring.scoring_result * 100}}%-->
+              <!--</span>-->
+
+              <!--<span ng-if="ctrl.data.scoring.level === 'danger'">-->
+                <!--<b>Платежеспособность низкая:</b>-->
+                <!--вероятность выплат по кредитам без штрафов - -->
+                <!--{{ctrl.data.scoring.scoring_result * 100}}%-->
+              <!--</span>-->
+            <!--</div>-->
+          <!--</div>-->
+
+
+          <div class="card row-offset-1"
              ng-init="ctrl.getClientStatistics()">
-            <div class="panel-heading">
-              <h5 class="panel-title">
+            <div class="card-header">
+              <h5 class="card-title">
                 Общее количество кредитов:
                 {{ctrl.statistics.credits.total_count}}
-                <a class="link" href="/credits/?client_id={{ctrl.data.id}}"> (Просмотреть)</a>
+                <a class="link" href="/credits/?client_id={{ctrl.data.id}}">
+                  <i class="fa fa-info-circle" aria-hidden="true"></i>
+                </a>
               </h5>
             </div>
-            <div class="panel-body" style="padding-bottom: 10px;">
-              <table width="100%" class="table table-bordered table-responsive">
+            <div class="card-body" style="padding-bottom: 10px;">
+              <table width="100%" class="table table-hover table-responsive">
                 <tr>
                   <th width="45%">Статус</th>
                   <th width="45%">Количество</th>
@@ -93,9 +120,9 @@
                   <td>{{status}}</td>
                   <td>{{ctrl.statistics.credits.states_count[code]}}</td>
                   <td>
-                    <a href="/credits/?client_id={{ctrl.data.id}}&status={{code}}"
-                       class="btn btn-info button">
-                      Просмотреть
+                    <a ng-if="ctrl.statistics.credits.states_count[code]!==0" href="/credits/?client_id={{ctrl.data.id}}&status={{code}}"
+                       class="btn button">
+                      <i class="fa fa-info-circle" aria-hidden="true"></i>
                     </a>
                   </td>
                 </tr>
@@ -118,16 +145,18 @@
             </div>
           </div>
 
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h5 class="panel-title">
+          <div class="card row-offset-1">
+            <div class="card-header">
+              <h5 class="card-title">
                 Общее количество вкладов:
                 {{ctrl.statistics.deposits.total_count}}
-                <a class="link" href="/deposits/?client_id={{ctrl.data.id}}"> (Просмотреть)</a>
+                <a class="link" href="/deposits/?client_id={{ctrl.data.id}}">
+                  <i class="fa fa-info-circle" aria-hidden="true"></i>
+                </a>
               </h5>
             </div>
-            <div class="panel-body" style="padding-bottom: 0px;">
-              <table width="100%" class="table table-bordered">
+            <div class="card-body" style="padding-bottom: 0px;">
+              <table width="100%" class="table table-hover">
                 <tr>
                   <th width="45%">Статус</th>
                   <th width="45%">Количество</th>
@@ -137,9 +166,9 @@
                   <td>{{status}}</td>
                   <td>{{ctrl.statistics.deposits.states_count[code]}}</td>
                   <td>
-                    <a href="/deposits/?client_id={{ctrl.data.id}}&status={{code}}"
-                       class="btn btn-info button">
-                      Просмотреть
+                    <a ng-if="ctrl.statistics.deposits.states_count[code]!==0" href="/deposits/?client_id={{ctrl.data.id}}&status={{code}}"
+                       class="btn button">
+                      <i class="fa fa-info-circle" aria-hidden="true"></i>
                     </a>
                   </td>
                 </tr>
@@ -147,16 +176,18 @@
             </div>
           </div>
 
-          <div class="panel panel-default">
-            <div class="panel-heading">
+          <div class="card row-offset-1">
+            <div class="card-header">
               <h5>
                 Общее количество транзакций:
                 {{ctrl.statistics.transactions.total_count}}
-                <a class="link" href="/transactions/?client_id={{ctrl.data.id}}"> (Просмотреть)</a>
+                <a class="link" href="/transactions/?client_id={{ctrl.data.id}}">
+                  <i class="fa fa-info-circle" aria-hidden="true"></i>
+                </a>
               </h5>
             </div>
-            <div class="panel-body" style="padding-bottom: 0px;">
-              <table width="100%" class="table table-bordered">
+            <div class="card-body" style="padding-bottom: 0px;">
+              <table width="100%" class="table table-hover">
                 <tr>
                   <th width="45%">Статус</th>
                   <th width="45%">Количество</th>
@@ -166,9 +197,9 @@
                   <td>{{status}}</td>
                   <td>{{ctrl.statistics.transactions.states_count[code]}}</td>
                   <td>
-                    <a href="/transactions/?client_id={{ctrl.data.id}}&type={{code}}"
-                       class="btn btn-info button">
-                      Просмотреть
+                    <a ng-if="ctrl.statistics.transactions.states_count[code]!==0" href="/transactions/?client_id={{ctrl.data.id}}&type={{code}}"
+                       class="btn button">
+                      <i class="fa fa-info-circle" aria-hidden="true"></i>
                     </a>
                   </td>
                 </tr>
@@ -177,9 +208,12 @@
           </div>
         </div>
 
-        <div class="tab-pane row-offset-0 active"
+        <div class="tab-pane active"
              id="tabProfile"
              role="tabpanel">
+          <div class="row row-offset-1">
+          <div class="col-md-1"></div>
+          <div class="col-md-8">
           <form ng-submit="ctrl.updateClient()">
             <div class="alert alert-success"
                  role="alert"
@@ -218,30 +252,39 @@
 
             <div class="form-group">
               <label for="birthDateInput">Дата рождения</label>
-              <p class="input-group" id="birthDateInput">
-                <input type="text"
-                       class="form-control"
-                       ng-model="ctrl.data.profile.birth_date"
-                       datepicker-popup="dd.MM.yyyy"
-                       show-weeks="false"
-                       is-open="birthDatePickerOpened"
-                       ng-required="true"
-                       placeholder="Дата рождения">
-                <span class="input-group-btn">
-                  <button type="button"
-                          class="btn btn-default"
-                          ng-click="toggleBirthDatePicker($event)">
-                    <i class="glyphicon glyphicon-calendar"></i>
-                  </button>
-                </span>
-              </p>
+
+              <div id="birthDateInput">
+                <md-datepicker
+                  type="text"
+                  class="test-width-datepicker"
+                  ng-model="ctrl.data.profile.birth_date"
+                  is-open="birthDatePickerOpened"
+                  ng-required="true"
+                  md-placeholder="Дата рождения">
+                </md-datepicker>
+              </div>
+              <!--<p class="input-group" id="birthDateInput">-->
+                <!--<input type="text"-->
+                       <!--class="form-control"-->
+                       <!--ng-model="ctrl.data.profile.birth_date"-->
+                       <!--datepicker-popup="dd.MM.yyyy"-->
+                       <!--show-weeks="false"-->
+                       <!--is-open="birthDatePickerOpened"-->
+                       <!--ng-required="true"-->
+                       <!--placeholder="Дата рождения">-->
+                <!--<span class="input-group-btn">-->
+                  <!--<button type="button"-->
+                          <!--class="btn btn-default"-->
+                          <!--ng-click="toggleBirthDatePicker($event)">-->
+                    <!--<i class="glyphicon glyphicon-calendar"></i>-->
+                  <!--</button>-->
+                <!--</span>-->
+              <!--</p>-->
             </div>
-            <hr class="primary">
 
             <div class="form-group">
               <label for="passportNumberInput">Номер паспорта</label>
               <input id="passportNumberInput"
-                     class="form-control"
                      class="form-control"
                      type="text"
                      ng-model="ctrl.data.profile.passport_number"
@@ -252,26 +295,39 @@
 
             <div class="form-group">
               <label for="passportExpiresDateInput">Срок действия паспорта</label>
-              <p class="input-group" id="passportExpiresDateInput">
-                <input type="text"
-                       class="form-control"
-                       ng-model="ctrl.data.profile.passport_expires"
-                       datepicker-popup="dd.MM.yyyy"
-                       show-weeks="false"
-                       is-open="passportExpiresPickerOpened"
-                       ng-required="true"
-                       placeholder="Срок действия паспорта"
-                       required
-                       ng-disabled="user.isClient()">
-                <span class="input-group-btn">
-                  <button type="button"
-                          class="btn btn-default"
-                          ng-click="togglePassportExpiresPicker($event)"
-                          ng-disabled="user.isClient()">
-                    <i class="glyphicon glyphicon-calendar"></i>
-                  </button>
-                </span>
-              </p>
+
+              <div id="passportExpiresDateInput">
+                <md-datepicker
+                  type="text"
+                  class="test-width-datepicker"
+                  ng-model="ctrl.data.profile.passport_expires"
+                  is-open="passportExpiresPickerOpened"
+                  ng-required="true"
+                  md-placeholder="Срок действия паспорта"
+                  ng-disabled="user.isClient()">
+                </md-datepicker>
+              </div>
+
+              <!--<p class="input-group" id="passportExpiresDateInput">-->
+                <!--<input type="text"-->
+                       <!--class="form-control"-->
+                       <!--ng-model="ctrl.data.profile.passport_expires"-->
+                       <!--datepicker-popup="dd.MM.yyyy"-->
+                       <!--show-weeks="false"-->
+                       <!--is-open="passportExpiresPickerOpened"-->
+                       <!--ng-required="true"-->
+                       <!--placeholder="Срок действия паспорта"-->
+                       <!--required-->
+                       <!--ng-disabled="user.isClient()">-->
+                <!--<span class="input-group-btn">-->
+                  <!--<button type="button"-->
+                          <!--class="btn btn-default"-->
+                          <!--ng-click="togglePassportExpiresPicker($event)"-->
+                          <!--ng-disabled="user.isClient()">-->
+                    <!--<i class="glyphicon glyphicon-calendar"></i>-->
+                  <!--</button>-->
+                <!--</span>-->
+              <!--</p>-->
             </div>
 
             <div class="form-group">
@@ -285,7 +341,6 @@
                      required
                      ng-disabled="user.isClient()">
             </div>
-            <hr class="primary">
 
             <div class="form-group">
               <label for="addressInput">Место проживания</label>
@@ -343,38 +398,43 @@
                         placeholder="Доходах">
               </textarea>
             </div>
-            <hr class="primary">
+            <div class="row">
+              <div class="col-sm-4">
+                <button type="submit"
+                        class="btn btn-info">
+                  <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                  Save Profile Data
+                </button>
+              </div>
 
-            <div class="row-offset-0">
-              <button type="submit"
-                      class="form-control btn btn-success">
-                <span class='glyphicon glyphicon-ok'></span>
-                Сохранить
-              </button>
-            </div>
+              <div class="col-sm-4" ng-if="user.user.is_superuser">
+                <a ng-click="ctrl.deleteUser(ctrl.data.id)"
+                        class="form-control btn">
+                  <span class='glyphicon glyphicon-remove'></span>
+                  Remove
+                </a>
+              </div>
 
-            <div class="row-offset-0" ng-if="user.user.is_superuser">
-              <a ng-click="ctrl.deleteUser(ctrl.data.id)"
-                      class="form-control btn btn-danger">
-                <span class='glyphicon glyphicon-remove'></span>
-                Удалить
-              </a>
-            </div>
-
-            <div class="row-offset-0" ng-if="user.isAdmin()">
-              <a href="/clients/"
-                 class="form-control btn btn-warning button">
-                <span class='glyphicon glyphicon-log-out'></span>
-                Назад
-              </a>
+              <!--<div class="col-sm-3" ng-if="user.isAdmin()">-->
+                <!--<a href="/clients/"-->
+                   <!--class="form-control btn button">-->
+                  <!--<span class='glyphicon glyphicon-log-out'></span>-->
+                  <!--Back-->
+                <!--</a>-->
+              <!--</div>-->
             </div>
           </form>
+          </div>
+          </div>
         </div>
 
         <div ng-if="user.isClient() || user.user.is_superuser"
              class="tab-pane row-offset-0"
              id="tabChangePassword"
              role="tabpanel">
+          <div class="row row-offset-1">
+          <div class="col-md-1"></div>
+          <div class="col-md-5">
           <form ng-submit="ctrl.changePassword()">
             <div class="alert alert-success"
                  role="alert"
@@ -401,7 +461,7 @@
             </div>
 
             <div class="form-group">
-              <label for="newPasswordConfirmInput">Новый пароль</label>
+              <label for="newPasswordConfirmInput">Подтвердите пароль</label>
               <input id="newPasswordConfirmInput"
                      class="form-control"
                      type="password"
@@ -410,13 +470,17 @@
             </div>
 
             <div class="row-offset-0">
-              <button type="submit"
-                      class="form-control btn btn-success button">
-                 <span class="glyphicon glyphicon-ok"></span>
-                 Изменить пароль
-              </button>
+              <div class="col-sm-4">
+                <button type="submit"
+                        class="btn btn-info">
+                  <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                  Изменить пароль
+                </button>
+              </div>
             </div>
           </form>
+          </div>
+          </div>
         </div>
       </div>
     </div>

@@ -3,7 +3,6 @@
      ng-init="ctrl.getClients()">
  <section>
   <h1>Клиенты</h1>
-  <hr class="primary">
 
   <div class="stretch row-offset-0"
       ng-if="user.user.is_superuser">
@@ -62,24 +61,26 @@
         </form>
       </div>
     </div>
-    <hr class="primary">
   </div>
 
-  <div class="loader"
-        ng-if="!ctrl.data">
-   </div>
+  <div ng-if="!ctrl.data">
+    <div class="loader"></div>
+  </div>
 
-  <table class="row-offset-0 table table-bordered"
+  <table class="row-offset-0 table table-hover"
          align="center"
          ng-if="ctrl.data">
-    <tr class="info">
-      <th width="28%">Имя</th>
+    <thead>
+    <tr>
+      <th width="14%">Профайл</th>
+      <th width="14%">Имя</th>
       <th width="20%">Личный номер</th>
       <th width="20%">Номер паспорта</th>
       <th width="12%">Статус</th>
       <th width="10%"></th>
     </tr>
     <tr>
+      <th></th>
       <th>
         <input type="text"
                class="form-control form-control-small"
@@ -101,25 +102,35 @@
       <th class="text-center">
         <div class="dropdown">
           <select class="form-control form-control-small"
-                  ng-model="ctrl.filterParams.state"
-                  ng-change="ctrl.updateFilterParams(13)">
+                  ng-model="ctrl.filterParams.state">
             <option></option>
             <option value="True">Активен</option>
             <option value="False">Отключен</option>
           </select>
         </div>
       </th>
-      <th></th>
+      <th>
+        <!--<div class="btn" ng-click="ctrl.updateFilterParams(13)"></div>-->
+
+        <button class="btn" ng-click="ctrl.updateFilterParams(13)">
+          Filter
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+      </th>
     </tr>
-    <tr ng-repeat="client in ctrl.data"
-        ng-class="client.scoring.level === 'success' ? 'success-light' :
-                  client.scoring.level === 'warning' ? 'warning-light' :
-                  client.scoring.level === 'danger' ? 'danger-light' : ''">
+    </thead>
+    <tr ng-repeat="client in ctrl.data">
+        <!--ng-class="client.scoring.level === 'success' ? 'success-light' :-->
+                  <!--client.scoring.level === 'warning' ? 'warning-light' :-->
+                  <!--client.scoring.level === 'danger' ? 'danger-light' : ''"  -->
       <td class="text-center">
         <a href="/clients/{{client.id}}/"
             class="link">
-          {{client.first_name}}
+          <i class="fa fa-address-card-o" aria-hidden="true"></i>
         </a>
+      </td>
+      <td class="text-center">
+        {{client.first_name}}
       </td>
       <td class="text-center">
         {{client.profile.identification_number}}
@@ -132,29 +143,28 @@
         <span ng-if="!client.is_active">Отключен</span>
       </td>
       <td>
-        <a href="/clients/{{client.id}}/"
-           class="stretch btn btn-info text-small">
-          <span class="glyphicon glyphicon-eye-open"></span>
-          Профайл
-        </a>
-        <a ng-if="!client.is_active && !client.processing"
-           class="stretch btn btn-success text-small row-offset-0"
+        <!--<a href="/clients/{{client.id}}/"-->
+           <!--class="stretch btn btn-info text-small">-->
+          <!--<span class="glyphicon glyphicon-eye-open"></span>-->
+          <!--Профайл-->
+        <!--</a>-->
+        <button ng-if="!client.is_active && !client.processing"
+           class="btn"
            ng-click="ctrl.activateClient(client)">
-          <span class="glyphicon glyphicon-plus"></span>
-          Активировать
-        </a>
-        <a ng-if="client.is_active && !client.processing"
-           class="stretch btn btn-warning text-small row-offset-0"
+          <i class="fa fa-plug" aria-hidden="true"></i>
+          <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
+        <button ng-if="client.is_active && !client.processing"
+           class="btn"
            ng-click="ctrl.deactivateClient(client)">
-          <span class="glyphicon glyphicon-remove"></span>
-          Отключить
-        </a>
-        <a ng-if="user.user.is_superuser"
-           class="stretch btn btn-danger text-small row-offset-0"
+          <i class="fa fa-plug" aria-hidden="true"></i>
+          <i class="fa fa-minus" aria-hidden="true"></i>
+        </button>
+        <button ng-if="user.user.is_superuser"
+           class="btn"
            ng-click="ctrl.deleteUser(client.id)">
-          <span class="glyphicon glyphicon-remove"></span>
-          Удалить
-        </a>
+          <i class="fa fa-address-card-o" aria-hidden="true"></i>
+          <i class="fa fa-times" aria-hidden="true"></i></i></button>
         <div class="loader-small row-offset-0"
              ng-if="client.processing">
         </div>
