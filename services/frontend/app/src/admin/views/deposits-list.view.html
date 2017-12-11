@@ -4,83 +4,94 @@
     <h1>Вклады</h1>
     <hr class="primary">
 
-    <div class="loader"
-         ng-if="!ctrl.data">
+    <div ng-if="!ctrl.data">
+      <div class="loader"></div>
     </div>
 
-    <table class="table table-bordered"
+    <table class="table table-hover"
            ng-if="ctrl.data">
-      <tr class="info">
-        <th width="28%" ng-if="user.isAdmin()">Клиент</th>
-        <th width="15%">Остаток</th>
-        <th width="20%" >План</th>
-        <th width="15%">Статус</th>
-        <th width="15%"></th>
-      </tr>
-      <tr>
-        <th ng-if="user.isAdmin()">
-          <input type="text"
-                 class="form-control form-control-small"
-                 ng-model="ctrl.filterParams.client_name"
-                 ng-keypress="ctrl.updateFilterParams($event.keyCode)">
-        </th>
-        <th>
-          <input type="text"
-                 class="form-control form-control-small"
-                 ng-model="ctrl.filterParams.amount"
-                 ng-keypress="ctrl.updateFilterParams($event.keyCode)">
-        </th>
-        <th>
-          <select class="form-control form-control-small"
-                  ng-model="ctrl.filterParams.template"
-                  ng-change="ctrl.updateFilterParams(13)"
-                  ng-init="ctrl.getDepositTemplates()">
-            <option></option>
-            <option ng-repeat="template in ctrl.templates"
-                    value="{{template.id}}">
-              {{template.name}}
-            </option>
-          </select>
-        </th>
-        <th>
-          <div class="dropdown">
+      <thead>
+        <tr class="info">
+          <th width="14%" ng-if="user.isAdmin()">Профиль Клиента</th>
+          <th width="14%" ng-if="user.isAdmin()">Имя Клиента</th>
+          <th width="15%">Остаток</th>
+          <th width="15%">План</th>
+          <th width="15%">Статус</th>
+          <th width="15%"></th>
+        </tr>
+        <tr>
+          <th ng-if="user.isAdmin()"></th>
+          <th ng-if="user.isAdmin()">
+            <input type="text"
+                   class="form-control form-control-small"
+                   ng-model="ctrl.filterParams.client_name"
+                   ng-keypress="ctrl.updateFilterParams($event.keyCode)">
+          </th>
+          <th>
+            <input type="text"
+                   class="form-control form-control-small"
+                   ng-model="ctrl.filterParams.amount"
+                   ng-keypress="ctrl.updateFilterParams($event.keyCode)">
+          </th>
+          <th>
             <select class="form-control form-control-small"
-                    ng-model="ctrl.filterParams.status"
-                    ng-change="ctrl.updateFilterParams(13)">
+                    ng-model="ctrl.filterParams.template"
+                    ng-init="ctrl.getDepositTemplates()">
               <option></option>
-              <option ng-repeat="(code, status) in ctrl.depositStatuses"
-                      value="{{code}}">
-                {{status}}
+              <option ng-repeat="template in ctrl.templates"
+                      value="{{template.id}}">
+                {{template.name}}
               </option>
             </select>
-          </div>
-        </th>
-        <th></th>
-      </tr>
+          </th>
+          <th>
+            <div class="dropdown">
+              <select class="form-control form-control-small"
+                      ng-model="ctrl.filterParams.status"">
+                <option></option>
+                <option ng-repeat="(code, status) in ctrl.depositStatuses"
+                        value="{{code}}">
+                  {{status}}
+                </option>
+              </select>
+            </div>
+          </th>
+          <th>
+            <button class="btn" ng-click="ctrl.updateFilterParams(13)">
+                Filter
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </button>
+          </th>
+        </tr>
+      </thead>
       <tr ng-repeat="deposit in ctrl.data">
-        <td ng-if="user.isAdmin()">
+        <td ng-if="user.isAdmin()"
+            class="text-center">
           <a class="link"
-             href="/clients/{{deposit.client.id}}/">
-            {{deposit.client.first_name}}
+              href="/clients/{{deposit.client.id}}/">
+              <i class="fa fa-address-card-o" aria-hidden="true"></i>
           </a>
         </td>
-        <td>
+        <td ng-if="user.isAdmin()"
+            class="text-center">
+          {{deposit.client.first_name}}
+        </td>
+        <td class="text-center">
           {{deposit.amount}} {{deposit.currency}}
         </td>
-        <td>
+        <td class="text-center">
           <a class="link"
              href="/deposit-templates/{{deposit.template.id}}/">
              {{deposit.template.name}}
           </a>
         </td>
-        <td>
+        <td class="text-center">
           {{ctrl.depositStatuses[deposit.status]}}
         </td>
-        <td>
+        <td class="text-center">
           <a href="/deposits/{{deposit.id}}/"
-             class="stretch text-small btn btn-info">
-            <span class="glyphicon glyphicon-eye-open"></span>
-            Детальная информация
+             class="stretch text-small link">
+             <i class="fa fa-info-circle" aria-hidden="true"></i>
           </a>
         </td>
       </tr>
