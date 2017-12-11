@@ -121,20 +121,20 @@
 
   <script src="src/app.config.js"></script>
 </head>
-<body ng-app="jupiter">
+<body ng-app="jupiter" class="authenticated-body">
 
 <div ng-controller="BaseController as baseCtrl">
   <div id="page-content">
     <div id="page-top" class="index">
-        <div class="container-fluid">
+      <div class="container-fluid">
+
+        <nav class="navbar navbar-light bg-light fixed-top authenticated-navbar">
+          <a class="navbar-brand" href="/">
+            <img src="assets/img/Ironbank-logo.png" height="60"
+                  alt="">
+          </a>
 
           <ul class="nav nav-tabs justify-content-end border border-top-0 border-left-0 border-right-0" >
-            <li class="nav-logo-item"  style="position: absolute; left: 15px; ">
-              <a href="/" class="a-nav-logo-item" ng-click="change_active_nav(0)" >
-                <img src="assets/img/Ironbank-logo.png" class="iron-bank-logo">
-              </a>
-            </li>
-
             <li class="nav-item " ng-if="!user.isAuthenticated()" >
               <a id="nav-link-1" class="nav-link" ng-click="change_active_nav(1)"  href="/deposit-templates/">
                 <i class="fa fa-line-chart" aria-hidden="true"></i>
@@ -170,66 +170,48 @@
           </ul>
 
 
+        </nav>
 
-        <!--</div>-->
+          <!--<ul class="nav nav-tabs justify-content-end border border-top-0 border-left-0 border-right-0" >-->
+            <!--<li class="nav-logo-item"  style="position: absolute; left: 15px; ">-->
+              <!--<a href="/" class="a-nav-logo-item" ng-click="change_active_nav(0)" >-->
+                <!--<img src="assets/img/Ironbank-logo.png" class="iron-bank-logo">-->
+              <!--</a>-->
+            <!--</li>-->
 
-        <!--<nav id="mainNav"-->
-             <!--class="navbar navbar-default  navbar-custom navbar-fixed-top">-->
-          <!--<div class="navbar-header">-->
-            <!--<button type="button"-->
-                    <!--class="navbar-toggle collapsed"-->
-                    <!--data-toggle="collapse"-->
-                    <!--data-target="#navbar-main"-->
-                    <!--aria-expanded="false">-->
-              <!--<span class="sr-only">Меню</span>-->
-              <!--<span class="icon-bar"></span>-->
-              <!--<span class="icon-bar"></span>-->
-              <!--<span class="icon-bar"></span>-->
-            <!--</button>-->
+            <!--<li class="nav-item " ng-if="!user.isAuthenticated()" >-->
+              <!--<a id="nav-link-1" class="nav-link" ng-click="change_active_nav(1)"  href="/deposit-templates/">-->
+                <!--<i class="fa fa-line-chart" aria-hidden="true"></i>-->
+                <!--Вклады-->
+              <!--</a>-->
+            <!--</li>-->
+            <!--<li class="nav-item" ng-if="!user.isAuthenticated()">-->
+              <!--<a id="nav-link-2" class="nav-link" ng-click="change_active_nav(2)" href="/credit-templates/">-->
+                <!--<i class="fa fa-credit-card" aria-hidden="true"></i>-->
+                <!--Кредиты-->
+              <!--</a>-->
+            <!--</li>-->
+            <!--<li class="nav-item" ng-if="!user.isAuthenticated()">-->
+              <!--<a id="nav-link-3" class="nav-link" ng-click="change_active_nav(3)" href="/sign-up/">-->
+                <!--<i class="fa fa-user-plus" aria-hidden="true"></i>-->
+                <!--Зарегистрироваться-->
+              <!--</a>-->
+            <!--</li>-->
+            <!--<li class="nav-item" ng-if="!user.isAuthenticated()">-->
+              <!--<a id="nav-link-4" class="nav-link" ng-click="change_active_nav(4)" href="/sign-in/">-->
+                <!--<i class="fa fa-sign-in" aria-hidden="true"></i>-->
+                <!--Войти-->
+              <!--</a>-->
+            <!--</li>-->
 
-          <!--</div>-->
+            <!--<li class="nav-item" ng-if="user.isAuthenticated()">-->
+              <!--<a href="javascript:void(0)" ng-click="auth.signOut(); change_active_nav(0);" class="nav-link">-->
+                <!--<i class="fa fa-sign-out" aria-hidden="true"></i>-->
+                <!--Выйти-->
+              <!--</a>-->
+            <!--</li>-->
 
-          <!--<div class="collapse navbar-collapse"-->
-               <!--id="navbar-main"-->
-               <!--style="margin-right: 30px;">-->
-            <!--<ul class="nav navbar-nav navbar-right">-->
-              <!--<li ng-if="!user.isAuthenticated()">-->
-                <!--<a href="/deposit-templates/" class="navbar-link">-->
-                  <!--<i class="fa fa-line-chart" aria-hidden="true"></i>-->
-                  <!--Вклады-->
-                <!--</a>-->
-              <!--</li>-->
-
-              <!--<li ng-if="!user.isAuthenticated()">-->
-                <!--<a href="/credit-templates/" class="navbar-link">-->
-                  <!--<i class="fa fa-credit-card" aria-hidden="true"></i>-->
-                  <!--Кредиты-->
-                <!--</a>-->
-              <!--</li>-->
-
-              <!--<li ng-if="!user.isAuthenticated()">-->
-                <!--<a href="/sign-in/" class="navbar-link">-->
-                  <!--<i class="fa fa-sign-in" aria-hidden="true"></i>-->
-                  <!--Войти-->
-                <!--</a>-->
-              <!--</li>-->
-
-              <!--<li ng-if="!user.isAuthenticated()">-->
-                <!--<a href="/sign-up/" class="navbar-link">-->
-                  <!--<i class="fa fa-user-plus" aria-hidden="true"></i>-->
-                  <!--Зарегистрироваться-->
-                <!--</a>-->
-              <!--</li>-->
-
-              <!--<li ng-if="user.isAuthenticated()">-->
-                <!--<a href="javascript:void(0)" ng-click="auth.signOut()" class="navbar-link">-->
-                  <!--<span class="glyphicon glyphicon-log-out"></span>-->
-                  <!--Выйти-->
-                <!--</a>-->
-              <!--</li>-->
-            <!--</ul>-->
-          <!--</div>-->
-        <!--</nav>-->
+          <!--</ul>-->
 
     </div>
 

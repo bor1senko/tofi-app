@@ -47,3 +47,12 @@ md-datepicker#passportExpiresDateInput .md-datepicker-input-container .md-datepi
     margin-right: 10px;
     margin-bottom: 20px;
 }
+
+.authenticated-body {
+    padding: 75px 0 0;
+}
+
+.authenticated-navbar {
+    height: 80px;
+    z-index: 3;
+}
