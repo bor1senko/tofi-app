@@ -19,6 +19,8 @@ from jupiter_auth.api.users.serializers import (
 )
 
 
+
+
 class UserView(ModelViewSet):
 
     queryset = get_user_model().objects.all()

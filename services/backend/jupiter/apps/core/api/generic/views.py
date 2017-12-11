@@ -8,7 +8,6 @@ from core.api.generic.mixins import FieldsViewMixin, OrderingViewMixin, Filterin
 from core.api.generic.permissions import JupiterPermission
 from jupiter_auth.authentication import TokenAuthentication
 
-
 class GenericViewSet(FieldsViewMixin,
                      OrderingViewMixin,
                      FilteringViewMixin,
@@ -17,7 +16,7 @@ class GenericViewSet(FieldsViewMixin,
 
 
 class ModelViewSet(BaseModelViewSet, GenericViewSet):
-    authentication_classes = [TokenAuthentication]
+    authentication_classes = (TokenAuthentication, )
 
 
 class ReadOnlyModelViewSet(BaseReadOnlyModelViewSet, GenericViewSet):

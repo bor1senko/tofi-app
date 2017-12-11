@@ -55,7 +55,6 @@ CRON_CLASSES = [
     "finance.tasks.SyncCurrencies",
 ]
 
-
 STATIC_ROOT = os.path.join(os.path.join(BASE_DIR, 'jupiter'), '.static')
 STATIC_URL = '/static/'
 TEMPLATES = [
