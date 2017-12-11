@@ -6,6 +6,7 @@
             ng-class="ctrl.valueIfPath(item.url, 'active')"
             class="sidebar-elem">
             <a href="{{item.url}}">
+                <i class="{{item.icon}}" aria-hidden="true" style="color: white; margin-right: 5px;"></i>
                 {{item.label}}
             </a>
         </li>
