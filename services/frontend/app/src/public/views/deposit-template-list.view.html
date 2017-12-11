@@ -3,51 +3,120 @@
      ng-init="ctrl.getDepositTemplates()"
      ng-class="!user.isAuthenticated() ? 'public-container' : ''">
   <section>
-    <h1>Вклады</h1>
-    <hr class="primary">
 
-    <div class='panel panel-info'
-         ng-repeat="dt in ctrl.data">
-      <div class="panel-heading">
-        <h5 class="panel-title">
-          <a class="link"
-             href="/deposit-templates/{{dt.id}}/">
-              {{dt.name}}
-          </a>
-        </h5>
-      </div>
+    <nav class="navbar navbar-dark bg-dark" style="margin-bottom: 30px;">
+      <a class="navbar-brand" href="#">
+        <i class="fa fa-list" aria-hidden="true" style="color: white;" ></i>
+        Вклады
+      </a>
+    </nav>
 
-      <div class="panel-body">
-        <div class="col-sm-3">
-          <img src="assets/img/deposits.icon.png"
-               class="img-responsive">
-        </div>
-        <div class="col-sm-9">
-          <h5>
-            <span ng-if="dt.closing <= 1">Отзывной</span>
-            <span ng-if="dt.closing == 2">Безотзывной</span>
-            вклад
-          </h5>
-          <h5>
-            Валюта вклада:
-            <span ng-if="dt.currency.BYN">белорусский рубль (BYN)</span>
-            <span ng-if="dt.currency.USD">, доллар США (USD)</span>
-            <span ng-if="dt.currency.EUR">, евро (EUR)</span>
-            <span ng-if="dt.currency.RUB">, российский рубль (RUB)</span>
-          </h5>
-          <p>
-            {{dt.description}}
-          </p>
-          <p class="text-small">
-            {{dt.detailed_info}}
-          </p>
-          <a class="btn btn-info button"
-             href="/deposit-templates/{{dt.id}}/">
-            <span class="glyphicon glyphicon-eye-open"></span>
-            Детальная информация
-          </a>
-        </div>
-      </div>
+
+
+<div class="row justify-content-center">
+  <div class="card credit-card-list" style="width: 20rem;" ng-repeat="dt in ctrl.data">
+    <div class="row justify-content-center">
+      <i class="fa fa-line-chart" aria-hidden="true" style="font-size: 13em;"></i>
     </div>
+    <div class="card-body">
+      <h4 class="card-title">
+        <a class="link"
+            href="/deposit-templates/{{dt.id}}/">
+          {{dt.name}}
+        </a>
+      </h4>
+      <p class="text-small card-text">
+        {{dt.detailed_info}}
+      </p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        <h5>
+            Валюта вклада:
+           </h5>
+          <h6>
+            <p ng-if="dt.currency.BYN" style="white-space: nowrap;">
+              <i class="fa fa-circle" style="font-size: 9px; margin-right: 0px; " aria-hidden="true"></i>
+              белорусский рубль (BYN)
+            </p>
+            <p ng-if="dt.currency.USD" style="white-space: nowrap">
+              <i class="fa fa-circle" style="font-size: 9px; margin-right: 0px;" aria-hidden="true"></i>
+              доллар США (USD)
+            </p>
+            <p ng-if="dt.currency.EUR" style="white-space: nowrap;">
+              <i class="fa fa-circle" style="font-size: 9px; margin-right: 0px;" aria-hidden="true"></i>
+              евро (EUR)
+            </p>
+            <p ng-if="dt.currency.RUB" style="white-space: nowrap">
+              <i class="fa fa-circle" style="font-size: 9px; margin-right: 0px;" aria-hidden="true"></i>
+              российский рубль (RUB)
+            </p>
+          </h6>
+      </li>
+      <li class="list-group-item">
+        <h6>
+
+            {{dt.description}}
+
+        </h6>
+      </li>
+    </ul>
+
+    <div class="card-body">
+      <a href="/deposit-templates/{{dt.id}}/" class="card-link">
+        <i class="fa fa-info-circle" aria-hidden="true"></i>
+        детальная информация
+      </a>
+    </div>
+  </div>
+</div>
+
+
+
+    <!-- old version -->
+
+    <!--<div class='panel panel-info'-->
+         <!--ng-repeat="dt in ctrl.data">-->
+      <!--<div class="panel-heading">-->
+        <!--<h5 class="panel-title">-->
+          <!--<a class="link"-->
+             <!--href="/deposit-templates/{{dt.id}}/">-->
+              <!--{{dt.name}}-->
+          <!--</a>-->
+        <!--</h5>-->
+      <!--</div>-->
+
+      <!--<div class="panel-body">-->
+        <!--<div class="col-sm-3">-->
+          <!--<img src="assets/img/deposits.icon.png"-->
+               <!--class="img-responsive">-->
+        <!--</div>-->
+        <!--<div class="col-sm-9">-->
+          <!--<h5>-->
+            <!--<span ng-if="dt.closing <= 1">Отзывной</span>-->
+            <!--<span ng-if="dt.closing == 2">Безотзывной</span>-->
+            <!--вклад-->
+          <!--</h5>-->
+          <!--<h5>-->
+            <!--Валюта вклада:-->
+            <!--<span ng-if="dt.currency.BYN">белорусский рубль (BYN)</span>-->
+            <!--<span ng-if="dt.currency.USD">, доллар США (USD)</span>-->
+            <!--<span ng-if="dt.currency.EUR">, евро (EUR)</span>-->
+            <!--<span ng-if="dt.currency.RUB">, российский рубль (RUB)</span>-->
+          <!--</h5>-->
+          <!--<p>-->
+            <!--{{dt.description}}-->
+          <!--</p>-->
+          <!--<p class="text-small">-->
+            <!--{{dt.detailed_info}}-->
+          <!--</p>-->
+          <!--<a class="btn btn-info button"-->
+             <!--href="/deposit-templates/{{dt.id}}/">-->
+            <!--<span class="glyphicon glyphicon-eye-open"></span>-->
+            <!--Детальная информация-->
+          <!--</a>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
   </section>
 </div>

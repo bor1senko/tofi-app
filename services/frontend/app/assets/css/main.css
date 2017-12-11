@@ -41,3 +41,9 @@ md-datepicker#passportExpiresDateInput .md-datepicker-input-container {
 md-datepicker#passportExpiresDateInput .md-datepicker-input-container .md-datepicker-input {
     width: 100%;
 }
+
+.credit-card-list {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
