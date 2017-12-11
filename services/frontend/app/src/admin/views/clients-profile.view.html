@@ -71,33 +71,6 @@
             </div>
           </div>
 
-          <!--<div class="panel">-->
-            <!--<div class="panel-heading">-->
-              <!--<h5 class="panel-title">Платежеспособность:</h5>-->
-            <!--</div>-->
-
-            <!--<div class="panel-body">-->
-              <!--<span ng-if="ctrl.data.scoring.level === 'success'">-->
-                <!--<b>Платежеспособность высокая:</b>-->
-                <!--вероятность выплат по кредитам без штрафов - -->
-                <!--{{ctrl.data.scoring.scoring_result * 100}}%-->
-              <!--</span>-->
-
-              <!--<span ng-if="ctrl.data.scoring.level === 'warning'">-->
-                <!--<b>Платежеспособность средняя:</b>-->
-                <!--вероятность выплат по кредитам без штрафов - -->
-                <!--{{ctrl.data.scoring.scoring_result * 100}}%-->
-              <!--</span>-->
-
-              <!--<span ng-if="ctrl.data.scoring.level === 'danger'">-->
-                <!--<b>Платежеспособность низкая:</b>-->
-                <!--вероятность выплат по кредитам без штрафов - -->
-                <!--{{ctrl.data.scoring.scoring_result * 100}}%-->
-              <!--</span>-->
-            <!--</div>-->
-          <!--</div>-->
-
-
           <div class="card row-offset-1"
              ng-init="ctrl.getClientStatistics()">
             <div class="card-header">
@@ -263,23 +236,7 @@
                   md-placeholder="Дата рождения">
                 </md-datepicker>
               </div>
-              <!--<p class="input-group" id="birthDateInput">-->
-                <!--<input type="text"-->
-                       <!--class="form-control"-->
-                       <!--ng-model="ctrl.data.profile.birth_date"-->
-                       <!--datepicker-popup="dd.MM.yyyy"-->
-                       <!--show-weeks="false"-->
-                       <!--is-open="birthDatePickerOpened"-->
-                       <!--ng-required="true"-->
-                       <!--placeholder="Дата рождения">-->
-                <!--<span class="input-group-btn">-->
-                  <!--<button type="button"-->
-                          <!--class="btn btn-default"-->
-                          <!--ng-click="toggleBirthDatePicker($event)">-->
-                    <!--<i class="glyphicon glyphicon-calendar"></i>-->
-                  <!--</button>-->
-                <!--</span>-->
-              <!--</p>-->
+
             </div>
 
             <div class="form-group">
@@ -308,26 +265,6 @@
                 </md-datepicker>
               </div>
 
-              <!--<p class="input-group" id="passportExpiresDateInput">-->
-                <!--<input type="text"-->
-                       <!--class="form-control"-->
-                       <!--ng-model="ctrl.data.profile.passport_expires"-->
-                       <!--datepicker-popup="dd.MM.yyyy"-->
-                       <!--show-weeks="false"-->
-                       <!--is-open="passportExpiresPickerOpened"-->
-                       <!--ng-required="true"-->
-                       <!--placeholder="Срок действия паспорта"-->
-                       <!--required-->
-                       <!--ng-disabled="user.isClient()">-->
-                <!--<span class="input-group-btn">-->
-                  <!--<button type="button"-->
-                          <!--class="btn btn-default"-->
-                          <!--ng-click="togglePassportExpiresPicker($event)"-->
-                          <!--ng-disabled="user.isClient()">-->
-                    <!--<i class="glyphicon glyphicon-calendar"></i>-->
-                  <!--</button>-->
-                <!--</span>-->
-              <!--</p>-->
             </div>
 
             <div class="form-group">
@@ -415,13 +352,6 @@
                 </a>
               </div>
 
-              <!--<div class="col-sm-3" ng-if="user.isAdmin()">-->
-                <!--<a href="/clients/"-->
-                   <!--class="form-control btn button">-->
-                  <!--<span class='glyphicon glyphicon-log-out'></span>-->
-                  <!--Back-->
-                <!--</a>-->
-              <!--</div>-->
             </div>
           </form>
           </div>

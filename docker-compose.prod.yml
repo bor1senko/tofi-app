@@ -7,7 +7,7 @@ db:
 
 
 scoring:
-  image: bor1senko/scoring
+  image: bor1senko/scoring:initial
 
 
 backend:

@@ -143,11 +143,7 @@
         <span ng-if="!client.is_active">Отключен</span>
       </td>
       <td>
-        <!--<a href="/clients/{{client.id}}/"-->
-           <!--class="stretch btn btn-info text-small">-->
-          <!--<span class="glyphicon glyphicon-eye-open"></span>-->
-          <!--Профайл-->
-        <!--</a>-->
+
         <button ng-if="!client.is_active && !client.processing"
            class="btn"
            ng-click="ctrl.activateClient(client)">
