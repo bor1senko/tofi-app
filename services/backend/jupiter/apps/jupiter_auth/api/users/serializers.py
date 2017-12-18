@@ -126,3 +126,18 @@ class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True, write_only=True)
     new_password = serializers.CharField(required=True, write_only=True)
     new_password_confirm = serializers.CharField(required=True, write_only=True)
+
+
+class ActiveTelegram(serializers.Serializer):
+    telegram = serializers.CharField(required=True)
+
+    # def validate(self, attrs):
+    #     attrs = super(ActiveTelegram, self).validate(attrs)
+    #     # phone = attrs.get('phone_number', '')
+    #     # phone = phone.replace(' ', '').strip()
+    #     # if phone[1:].isdigit():
+    #     #     attrs['phone_number'] = phone
+    #     #     return attrs
+    #     # else:
+    #     #     raise ValidationError("invalid phone number.")
+

@@ -35,7 +35,7 @@ class Command(BaseCommand):
         init_credit_templates()
         create_admins(3)
         logger.info('Admins generated.')
-        create_clients(10)
+        create_clients(1)
         logger.info('Clients generated.')
         create_accounts()
         logger.info('Clients accounts generated.')
@@ -160,24 +160,24 @@ def create_accounts():
 def create_credits():
     templates_ids = [t.id for t in CreditTemplate.objects.all()]
     min_amount = {
-        "Европа": 1000,
-        "Калисто": 1000,
-        "Ио": 500,
-        "Адреаста": 15000,
-        "Ганимед": 20000,
-        "Ганимед+": 20000,
+        "По плечу": 100,
+        "На счастливые моменты": 100,
+        "Гарант": 1000,
+        "Экспресс-кредит": 50,
+        "Новенький": 100,
+
     }
     max_amount = {
-        "Европа": 15000,
-        "Калисто": 5000,
-        "Ио": 3000,
-        "Адреаста": 30000,
-        "Ганимед": 50000,
-        "Ганимед+": 50000,
+        "По плечу": 3000,
+        "На счастливые моменты": 1000,
+        "Гарант": 30000,
+        "Экспресс-кредит": 3000,
+        "Новенький": 15000,
+
     }
     for client in User.objects.all():
         if get_or_create_clients_group() in client.groups.all():
-            credits_count = random.randint(2, 8)
+            credits_count = random.randint(1, 2)
             for i in range(credits_count):
                 template_id = random_element(templates_ids)
                 template = CreditTemplate.objects.get(pk=template_id)
@@ -203,7 +203,7 @@ def create_deposits():
     templates_ids = [t.id for t in DepositTemplate.objects.all()]
     for client in User.objects.all():
         if get_or_create_clients_group() in client.groups.all():
-            deposits_count = random.randint(2, 6)
+            deposits_count = random.randint(1, 2)
             for i in range(deposits_count):
                 template_id = random_element(templates_ids)
                 template = DepositTemplate.objects.get(pk=template_id)

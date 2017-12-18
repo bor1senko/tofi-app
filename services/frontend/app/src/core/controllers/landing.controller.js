@@ -1,4 +1,4 @@
-angular.module("ui.bootstrap.core", ['ngAnimate', 'ngSanitize', 'ui.bootstrap']);
+angular.module("ui.bootstrap.core", ['ngAnimate', 'ngSanitize']);
 //module = angular.module("jupiter.core");
 module.controller('HomeController', HomeController);
 

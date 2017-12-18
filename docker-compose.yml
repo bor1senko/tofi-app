@@ -1,12 +1,15 @@
-db:
-  image: postgres
-  environment:
-    - POSTGRES_PASSWORD=jupiter
-    - POSTGRES_USER=jupiter
+version: '2'
 
-backend:
-  image: jupiterapp/backend
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=jupiter
+      - POSTGRES_USER=jupiter
+
+  backend:
+    image: jupiterapp/backend
 
 
-frontend:
-  image: jupiterapp/frontend
+  frontend:
+    image: jupiterapp/frontend

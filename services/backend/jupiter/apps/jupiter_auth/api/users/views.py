@@ -15,7 +15,8 @@ from jupiter_auth.api.users.permissions import ManageSelfPermission
 from jupiter_auth.api.users.serializers import (
     UserSerializer,
     ChangePasswordSerializer,
-    CreateAdminSerializer
+    CreateAdminSerializer,
+    ActiveTelegram
 )
 
 
@@ -55,7 +56,7 @@ class UserView(ModelViewSet):
 
         message = render_to_string('auth/account_confirm_email.html')
         try:
-            send_mail('no-reply@jupiter-group.com', user.email, 'Ваш аккаунт подтвержден', message)
+            send_mail('no-reply@iron-bank.me', user.email, 'Ваш аккаунт подтвержден', message)
         except Exception as e:
             raise ValidationError('Ошибка при отправке письма: {}'.format(e))
         return Response(status=status.HTTP_200_OK)
@@ -71,7 +72,7 @@ class UserView(ModelViewSet):
 
         message = render_to_string('auth/account_deactivate_email.html')
         try:
-            send_mail('no-reply@jupiter-group.com', user.email, 'Ваш аккаунт отключен', message)
+            send_mail('no-reply@iron-bank.me', user.email, 'Ваш аккаунт отключен', message)
         except Exception as e:
             raise ValidationError('Ошибка при отправке письма: {}'.format(e))
         return Response(status=status.HTTP_200_OK)
@@ -143,5 +144,16 @@ class UserView(ModelViewSet):
         serializer = CreateAdminSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)\
+
+
+    @detail_route(methods=['PATCH'])
+    def active_telegram(self, request, *args, **kwargs):
+        serializer = ActiveTelegram(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = self.get_object()
+        user.profile.telegram = serializer.data.get('telegram', None);
+        user.profile.save()
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)

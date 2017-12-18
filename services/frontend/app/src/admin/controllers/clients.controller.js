@@ -4,7 +4,7 @@ module.controller('ClientsController', ClientsController);
 
 function ClientsController($http, $error, $auth, $routeParams,
                            $scope, $filter, $location, $url, $route,
-                           creditStatuses, depositStatuses, transactionTypes)
+                           creditStatuses, depositStatuses, transactionTypes )
 {
     var ctrl = this;
     ctrl.creditStatuses = creditStatuses;
@@ -64,11 +64,12 @@ function ClientsController($http, $error, $auth, $routeParams,
         $http.get($auth.addUrlAuth('/api/users/' + $routeParams['id'] + '/')).then(
             function success(response) {
                 ctrl.data = response.data;
+
                 $error.clearErrors();
 
                 ctrl.data.profile.birth_date = new Date(ctrl.data.profile.birth_date);
                 ctrl.data.profile.passport_expires = new Date(ctrl.data.profile.passport_expires);
-
+                ctrl.telegram_data.telegram = ctrl.data.profile.telegram;
                 $('.tab-link').click(function (e) {
                     e.preventDefault();
                     $(this).tab('show')
@@ -128,6 +129,32 @@ function ClientsController($http, $error, $auth, $routeParams,
             }
         )
     };
+
+//##############
+
+    ctrl.telegram_fase_1 = true;
+    ctrl.telegram_data = {
+
+    };
+    this.activateTelegram  = function() {
+
+        $http.patch(
+            $auth.addUrlAuth('/api/users/' +  $routeParams['id'] + '/active_telegram/'),
+            ctrl.telegram_data
+        ).then(
+            function success(response) {
+                ctrl.getClient();
+                // console.log(response);
+                $error.onSuccess('telegram username изменен');
+                // ctrl.telegram_fase_1 = false;
+            },
+            function error(response) {
+                $error.onError(response);
+            }
+        )
+    };
+
+//sdfsdfsdf
 
     this.getClientStatistics = function () {
         $http.get($auth.addUrlAuth('/api/users/' +  $routeParams['id'] + '/statistics/')).then(

@@ -56,3 +56,13 @@ md-datepicker#passportExpiresDateInput .md-datepicker-input-container .md-datepi
     height: 80px;
     z-index: 3;
 }
+
+.notification-rule {
+    color: darkred;
+    font-size: 16px;
+    cursor: default;
+}
+
+.notification-rule:hover {
+    color: red;
+}

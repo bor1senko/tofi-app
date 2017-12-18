@@ -7,6 +7,7 @@
 
     <div class="row-offset-0">
       <ul class="nav nav-tabs" role="tablist" id="tabsHeader">
+
         <li role="presentation" class="nav-item">
            <a href="#tabProfile"
               aria-controls="tabProfile"
@@ -16,6 +17,7 @@
              Личные данные
            </a>
         </li>
+
         <li role="presentation"
             class="nav-item"
             ng-if="user.isAdmin() && !user.user.is_superuser">
@@ -27,6 +29,7 @@
             Статистика
           </a>
         </li>
+
         <li role="presentation"
             class="nav-item"
             ng-if="user.isClient() || user.user.is_superuser">
@@ -36,6 +39,18 @@
              data-toggle="tab"
              class="nav-link tab-link">
             Изменение пароля
+          </a>
+        </li>
+
+        <li role="presentation"
+            class="nav-item"
+            ng-if="user.isClient() || user.user.is_superuser">
+          <a href="#ServicesNotification"
+             aria-controls="ServicesNotification"
+             role="tab"
+             data-toggle="tab"
+             class="nav-link tab-link">
+            Сервисы нотификации
           </a>
         </li>
       </ul>
@@ -482,6 +497,90 @@
           </div>
           </div>
         </div>
+
+        <div ng-if="user.isClient() || user.user.is_superuser"
+             class="tab-pane row-offset-0"
+             id="ServicesNotification"
+             role="tabpanel">
+
+
+          <div class="card">
+            <div class="card-header" style="font-size: 20px;">
+              <i class="fa fa-telegram" aria-hidden="true"></i>
+              Telegram notification
+            </div>
+            <div class="card-body">
+              <p class="card-text">1. Укажите username вашего телеграм аккаунта </p>
+              <!--<p  ng-if="!ctrl.telegram_fase_1" class="card-text">Укажите код подтверждения</p>-->
+              <form ng-if="ctrl.telegram_fase_1" ng-submit="ctrl.activateTelegram()">
+                <div class="form-group">
+                <input
+                        required
+                        type="text"
+                        class="form-control"
+                        placeholder="@username"
+                        id="formGroupExampleInput"
+                        ng-model="ctrl.telegram_data.telegram">
+              </div>
+                <button type="submit" class="btn btn-primary">подключить</button>
+              </form>
+              <p class="card-text">2. Воспользуйтесь этой <a href="https://t.me/IronBankMeBot">ссылкой</a> что бы активировать бота </p>
+
+              <!--<form ng-if="!ctrl.telegram_fase_1" ng-submit="">-->
+                <!--<div class="form-group">-->
+                <!--<input-->
+                        <!--type="text"-->
+                        <!--class="form-control"-->
+                        <!--placeholder="code"-->
+                        <!--id="formGroupExampleInput1"-->
+                        <!--required-->
+                        <!--ng-model="ctrl.telegram_data.code">-->
+              <!--</div>-->
+
+                <!--<div class="form-group">-->
+                  <!--<label class="form-check-label">-->
+                    <!--<input class="form-check-input" type="checkbox" id="confirmTelegramAction" value="" required>-->
+                      <!--разрешаю приложению выполнить-->
+                    <!--</label> <span class="notification-rule" data-toggle="modal" data-target="#exampleModal"> следующие дейсвтия </span>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; start &ndash;&gt;-->
+                <!--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"-->
+                     <!--aria-labelledby="exampleModalLabel" aria-hidden="true">-->
+                  <!--<div class="modal-dialog" role="document">-->
+                    <!--<div class="modal-content">-->
+                      <!--<div class="modal-header">-->
+                        <!--<h5 class="modal-title" id="exampleModalLabel">Подтверждение действий</h5>-->
+                        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+                          <!--<span aria-hidden="true">&times;</span>-->
+                        <!--</button>-->
+                      <!--</div>-->
+                      <!--<div class="modal-body">-->
+                        <!--<p>приложение отправит сообщение боту с вашего аккаунта.</p>-->
+                      <!--</div>-->
+                      <!--<div class="modal-footer">-->
+                        <!--<button type="button" class="btn btn-primary"  onclick="activeTelegramAction()">разрешить</button>-->
+                        <!--<script>-->
+                          <!--var activeTelegramAction = function () {-->
+                              <!--$('#confirmTelegramAction').prop('checked', true);-->
+                              <!--$('#exampleModal').modal('hide');-->
+                          <!--};-->
+                        <!--</script>-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; end &ndash;&gt;-->
+                <!--<button type="submit" class="btn btn-primary">подключить</button>-->
+              <!--</form>-->
+
+
+
+            </div>
+          </div>
+
+
+        </div>
+
       </div>
     </div>
   </section>

@@ -3,9 +3,9 @@ from __future__ import absolute_import, unicode_literals
 
 import os
 import sys
-
+import djcelery
 from jupiter.utils import collect_applications, to_bool
-
+from celery.schedules import crontab
 
 SECRET_KEY = 'fa55uiv$$izc6=0%eu)aixt!2h#!#mjskw4^k=@u5uvdai-u3f'
 BASE_DIR = os.environ.get('BACKEND_PATH', '..')
@@ -36,7 +36,11 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djmoney',
     'django_cron',
+    'djcelery',
+
 ] + collect_applications()
+
+djcelery.setup_loader()
 
 
 MIDDLEWARE = [
@@ -72,3 +76,21 @@ TEMPLATES = [
         },
     },
 ]
+
+
+
+CELERY_ACCEPT_CONTENT = ['json', ]
+CELERY_TASK_SERIALIZER = "json"
+BROKER_URL = 'amqp://admin:mypass@rabbit:5672'
+
+
+CELERYBEAT_SCHEDULE = {
+    'deily-update': {
+        'task': 'finance.tasks.deily_update',
+        'schedule': crontab(minute=0, hour='*/24')
+    },
+    'sync-currency': {
+        'task': 'finance.tasks.sync_currencies',
+        'schedule': crontab(minute=0, hour='*/12')
+    },
+}
